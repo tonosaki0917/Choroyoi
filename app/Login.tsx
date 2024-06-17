@@ -6,24 +6,24 @@ import { NavigationProp, useNavigation } from '@react-navigation/native';
 
 import { MainStackList } from '../navigation/MainNav'
 
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '@/App';
+
 type Navigation = NavigationProp<MainStackList>;
 
 export default function Login() {
-  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const navigation = useNavigation<Navigation>();
 
-  const handleLogin = () => {
-    // ログイン認証処理
-    if (password === 'password') {
-      console.log("success!");
-      Alert.alert("Success", "You have successfully logged in!");
-      navigation.navigate('Home', {screen: 'Home', params: { userName: username }});
-    } else {
-        console.log("invalid");
-        Alert.alert("Error", "Invalid username or password");
-    }
+  const handleLogin = async () => {
+    try{
+      await signInWithEmailAndPassword(auth, email, password);
+      navigation.navigate('Home', {screen: 'Home', params: { userName: "username" }});
+    } catch (error) {
+      console.log(error);
+    }     
   };
 
   const GotoRegister = () => {
@@ -35,9 +35,9 @@ export default function Login() {
       <Text style={styles.title}>Login</Text>
       <TextInput
         style={styles.input}
-        placeholder="ユーザ名"
-        value={username}
-        onChangeText={setUsername}
+        placeholder="メールアドレス"
+        value={email}
+        onChangeText={setEmail}
       />
       <TextInput
         style={styles.input}

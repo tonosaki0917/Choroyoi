@@ -6,24 +6,27 @@ import { NavigationProp, useNavigation } from '@react-navigation/native';
 
 import { MainStackList } from '../navigation/MainNav'
 
+import { auth } from '@/App';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+
 type Navigation = NavigationProp<MainStackList>;
 
 export default function Register() {
   const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const navigation = useNavigation<Navigation>();
 
-  const handleRegist = () => {
+  const handleRegist = async () => {
     // 新規登録処理
-    if (username === 'exist') {
-      console.log("already exist");
-      Alert.alert("Error", "Invalid username");
-    } else {
-        console.log("success!");
-        Alert.alert("Success", "complete register");
-        navigation.navigate('Home', {screen: 'Home', params: { userName: username }});
-    }
+    try{
+      const user = await createUserWithEmailAndPassword(auth, email, password);
+      console.log(user);
+      navigation.navigate('Login');
+    } catch (error) {
+      console.log(error);
+    }  
   };
 
   return (
@@ -34,6 +37,12 @@ export default function Register() {
         placeholder="ユーザ名"
         value={username}
         onChangeText={setUsername}
+      />
+      <TextInput
+        style={styles.input}
+        placeholder="メールアドレス"
+        value={email}
+        onChangeText={setEmail}
       />
       <TextInput
         style={styles.input}

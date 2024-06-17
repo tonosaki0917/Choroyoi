@@ -14,6 +14,7 @@ export type MainStackList = {
 
 const Stack = createStackNavigator<MainStackList>();
 
+//初めに呼び出されるnavigation
 export function MainNavigation() {
   
     return (
