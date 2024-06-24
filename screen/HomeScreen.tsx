@@ -1,24 +1,55 @@
 import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 import { Dimensions } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { StackParamList } from '../../route';
+import { StackParamList } from '../route';
 import { NavigationProp } from '@react-navigation/native';
 
 type Navigation = NavigationProp<StackParamList>;
 
-export default function StartScreen() {
+export default function HomeScreen() {
   const navigation = useNavigation<Navigation>();
   const { width, height } = Dimensions.get('window');
   return (
     <View style={styles.container}>
-      <Image source={require('./homeImage.png')} style={{width: width, height: height}} />
       <View style={styles.overlay}>
         <TouchableOpacity 
         style={styles.button}
-        onPress={() => navigation.navigate('QuizSelect')}
+        onPress={() => navigation.navigate('Profile')}
         >
           <Text style={styles.font}>
-            Start
+            Profile
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity 
+        style={styles.button}
+        onPress={() => navigation.navigate('Question')}
+        >
+          <Text style={styles.font}>
+            Question
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity 
+        style={styles.button}
+        onPress={() => navigation.navigate('Result')}
+        >
+          <Text style={styles.font}>
+            Result
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity 
+        style={styles.button}
+        onPress={() => navigation.navigate('TakePhoto')}
+        >
+          <Text style={styles.font}>
+            TakePhoto
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity 
+        style={styles.button}
+        onPress={() => navigation.navigate('WriteMenu')}
+        >
+          <Text style={styles.font}>
+            WriteMenu
           </Text>
         </TouchableOpacity>
       </View>
@@ -52,7 +83,6 @@ const styles = StyleSheet.create({
     borderColor: 'black',
   },
   font: {
-    fontFamily: 'SmileySans-Oblique',
     color: 'black', 
     fontSize: 30,
     letterSpacing: 5,
