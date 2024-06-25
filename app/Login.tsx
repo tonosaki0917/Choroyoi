@@ -19,8 +19,11 @@ export default function Login() {
 
   const handleLogin = async () => {
     try{
-      await signInWithEmailAndPassword(auth, email, password);
-      navigation.navigate('Home', {screen: 'Home', params: { userName: "username" }});
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user
+      console.log(user.displayName);
+      console.log(user.uid);
+      navigation.navigate('Home', {screen: 'Home', params: { userName: user.displayName }});
     } catch (error) {
       console.log(error);
     }     

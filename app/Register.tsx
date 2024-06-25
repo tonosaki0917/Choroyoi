@@ -7,7 +7,7 @@ import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { MainStackList } from '../navigation/MainNav'
 
 import { auth } from '@/App';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 
 type Navigation = NavigationProp<MainStackList>;
 
@@ -21,8 +21,11 @@ export default function Register() {
   const handleRegist = async () => {
     // 新規登録処理
     try{
-      const user = await createUserWithEmailAndPassword(auth, email, password);
-      console.log(user);
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user
+      
+      updateProfile(user, {displayName:username});
+      console.log(user.uid);
       navigation.navigate('Login');
     } catch (error) {
       console.log(error);

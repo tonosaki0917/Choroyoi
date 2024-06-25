@@ -6,11 +6,24 @@ import { Text, View } from 'react-native';
 import { useRoute, RouteProp, NavigationProp, useNavigation } from '@react-navigation/native';
 import { HomeStackList } from '@/navigation/HomeNav';
 
+import { getAuth, updateProfile } from "firebase/auth";
+import { auth } from '@/App';
+
 type Navigation = NavigationProp<HomeStackList>;
+
+
 
 export default function Setting() {
   const [username, setUsername] = useState('');
   const navigation = useNavigation<Navigation>();
+
+  const CompleteSetting = () => {
+    if(auth.currentUser){
+      updateProfile(auth.currentUser, {displayName: username})
+      console.log("complete update")
+      navigation.navigate('Home', { userName:username});
+    }
+  }
 
   return (
     <View style={styles.container}>
@@ -24,7 +37,7 @@ export default function Setting() {
         onChangeText={setUsername}
       />
 
-      <Button title="完了して戻る" onPress={() => {navigation.navigate('Home', { userName:username});}} />
+      <Button title="完了して戻る" onPress={CompleteSetting}/>
       <View style={styles.separator} />
       <StatusBar style={Platform.OS === 'ios' ? 'light' : 'auto'} />
     </View>
