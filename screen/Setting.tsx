@@ -21,7 +21,7 @@ export default function Setting() {
     if(auth.currentUser){
       updateProfile(auth.currentUser, {displayName: username})
       console.log("complete update")
-      navigation.navigate('Home', { userName:username});
+      navigation.navigate('Home');
     }
   }
 
