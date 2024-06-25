@@ -23,6 +23,7 @@ export default function Login() {
       const user = userCredential.user
       console.log(user.displayName);
       console.log(user.uid);
+      alert("Hello, " + user.displayName);
       navigation.navigate('Home', {screen: 'Home'});
     } catch (error) {
       console.log(error);
