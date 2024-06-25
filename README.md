@@ -50,8 +50,9 @@ Join our community of developers creating universal apps.
 - [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
 
 # Firebase
-1. Add "firebase.js" file in database.
-2. Add following sentences.
+1. install firebase
+2. Add "firebase.js" file in database.
+3. Add following sentences.
 
 -firebase.js- 
 ```

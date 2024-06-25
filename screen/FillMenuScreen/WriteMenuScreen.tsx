@@ -1,20 +1,84 @@
+import { useState } from 'react';
 import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 import { Dimensions } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { HomeStackList } from '@/navigation/HomeNav';
 import { NavigationProp } from '@react-navigation/native';
 
+import Checkbox from '@/components/CheckBox';
+import { SafeAreaView } from 'react-native-safe-area-context';
+
 type Navigation = NavigationProp<HomeStackList>;
+
+type CheckboxStates = {
+  [key: string]: boolean;
+};
 
 export default function WriteMenuScreen() {
   const navigation = useNavigation<Navigation>();
+
+  const [checkboxStates, setCheckboxStates] = useState<CheckboxStates>({
+    op1: false,
+    op2: false,
+    op3: false,
+    op4: false,
+    op5: false
+  });
+  //チェックボックスのボタンを押したとき
+  const handleValueChange = (key: string) => {
+    setCheckboxStates((prevStates) => ({
+      ...prevStates,
+      [key]: !prevStates[key],
+    }));
+  };
+
+  //Returnが押されたとき
+  const handleReturn = () => {
+    const selectedItems = Object.keys(checkboxStates)
+      .filter((key) => checkboxStates[key])
+      .reduce((obj:CheckboxStates, key) => {
+        obj[key] = checkboxStates[key];
+        return obj;
+      }, {});
+      
+    console.log("Selected Items: ", selectedItems);
+    navigation.navigate('Home')
+  }
+
   const { width, height } = Dimensions.get('window');
   return (
     <View style={styles.container}>
-      <View style={styles.overlay}>
+      <SafeAreaView style={styles.container}>
+        <Checkbox
+          label='ビール'
+          value={checkboxStates.op1}
+          onValueChange={() => {console.log("click check box"); handleValueChange("op1")}}
+        />
+        <Checkbox
+          label='焼酎'
+          value={checkboxStates.op2}
+          onValueChange={() => {console.log("click check box"); handleValueChange("op2")}}
+        />
+        <Checkbox
+          label='梅酒'
+          value={checkboxStates.op3}
+          onValueChange={() => {console.log("click check box"); handleValueChange("op3")}}
+        />
+        <Checkbox
+          label='サワー'
+          value={checkboxStates.op4}
+          onValueChange={() => {console.log("click check box"); handleValueChange("op4")}}
+        />
+        <Checkbox
+          label='日本酒'
+          value={checkboxStates.op5}
+          onValueChange={() => {console.log("click check box"); handleValueChange("op5")}}
+        />
+      </SafeAreaView>
+      <View style={styles.container}>
       <TouchableOpacity 
         style={styles.button}
-        onPress={() => navigation.navigate('Home')}
+        onPress={handleReturn}
         >
           <Text style={styles.font}>
             Return Home
