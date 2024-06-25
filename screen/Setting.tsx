@@ -6,7 +6,7 @@ import { Text, View } from 'react-native';
 import { useRoute, RouteProp, NavigationProp, useNavigation } from '@react-navigation/native';
 import { HomeStackList } from '@/navigation/HomeNav';
 
-import { getAuth, updateProfile } from "firebase/auth";
+import { updateProfile } from "firebase/auth";
 import { auth } from '@/App';
 
 type Navigation = NavigationProp<HomeStackList>;
@@ -21,7 +21,7 @@ export default function Setting() {
     if(auth.currentUser){
       updateProfile(auth.currentUser, {displayName: username})
       console.log("complete update")
-      navigation.navigate('Home', { userName:username});
+      navigation.navigate('Home');
     }
   }
 

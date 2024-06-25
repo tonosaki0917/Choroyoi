@@ -48,3 +48,19 @@ Join our community of developers creating universal apps.
 
 - [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
 - [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+
+# Firebase
+
+1. Add "firebase.js" file in database.
+2. Add following sentences.
+
+-firebase.js-
+export const firebaseConfig = {
+    apiKey: "XXXX",
+    authDomain: "XXXX",
+    projectId: "XXXX",
+    storageBucket: "XXXX",
+    messagingSenderId: "XXXX",
+    appId: "XXXX",
+    measurementId: "XXXX"
+};
