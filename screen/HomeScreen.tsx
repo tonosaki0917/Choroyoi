@@ -3,15 +3,25 @@ import { Dimensions } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { HomeStackList } from '@/navigation/HomeNav';
 import { NavigationProp } from '@react-navigation/native';
+import Menu from '@/components/Menu';
+import VerticalText from '../components/VerticalText';
 
 type Navigation = NavigationProp<HomeStackList>;
 
 export default function HomeScreen() {
   const navigation = useNavigation<Navigation>();
   const { width, height } = Dimensions.get('window');
+  const menuItems = "ビール/焼酎/梅酒/サワー/"; //変数menuItemsを設定、/（スラッシュ）で改行
+
   return (
     <View style={styles.container}>
-      <View style={styles.overlay}>
+        <Menu
+                menuItems={menuItems}
+                radius={15}
+                justifyContent='center'
+                alignItems='center'
+              >
+              </Menu>
         <TouchableOpacity 
         style={styles.button}
         onPress={() => navigation.navigate('Profile')}
@@ -53,7 +63,6 @@ export default function HomeScreen() {
           </Text>
         </TouchableOpacity>
       </View>
-    </View>
   );
 }
 
@@ -61,9 +70,18 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#A15D44',
+    flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  menuContainer: {
+    flex: 1,
+    backgroundColor: '#F7DEC4',
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: 30,
+    width: 60,
   },
   overlay: {
     position: 'absolute',
@@ -84,7 +102,7 @@ const styles = StyleSheet.create({
   },
   font: {
     color: 'black', 
-    fontSize: 30,
+    fontSize: 5,
     letterSpacing: 5,
     padding: 1
   }
