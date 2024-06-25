@@ -2,7 +2,6 @@ import { NavigationContainer, NavigatorScreenParams } from '@react-navigation/na
 import { createStackNavigator } from '@react-navigation/stack';
 
 import Login from '../screen/Login';
-import Home from '../screen/Home';
 import { HomeNavigation, HomeStackList } from './HomeNav';
 import Register from '@/screen/Register';
 

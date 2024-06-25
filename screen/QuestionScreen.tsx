@@ -1,10 +1,10 @@
 import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 import { Dimensions } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { StackParamList } from '../route';
+import { HomeStackList } from '@/navigation/HomeNav';
 import { NavigationProp } from '@react-navigation/native';
 
-type Navigation = NavigationProp<StackParamList>;
+type Navigation = NavigationProp<HomeStackList>;
 
 export default function QuestionScreen() {
   const navigation = useNavigation<Navigation>();
