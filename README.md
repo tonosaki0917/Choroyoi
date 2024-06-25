@@ -54,7 +54,7 @@ Join our community of developers creating universal apps.
 2. Add following sentences.
 
 -firebase.js- 
-'''
+```
 export const firebaseConfig = { 
    apiKey: "XXXX", 
    authDomain: "XXXX", 
@@ -63,4 +63,4 @@ export const firebaseConfig = {
    messagingSenderId: "XXXX", 
    appId: "XXXX", 
    measurementId: "XXXX" };
-'''
+```
