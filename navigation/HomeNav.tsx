@@ -1,9 +1,9 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
-import Home from '../app/Home';
-import Setting from '@/app/Setting';
-import Questioner from '@/app/Questioner';
+import Home from '../screen/Home';
+import Setting from '@/screen/Setting';
+import Questioner from '@/screen/Questioner';
 
 export type HomeStackList = {
     Setting: undefined;

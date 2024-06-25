@@ -1,10 +1,10 @@
 import { NavigationContainer, NavigatorScreenParams } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
-import Login from '../app/Login';
-import Home from '../app/Home';
+import Login from '../screen/Login';
+import Home from '../screen/Home';
 import { HomeNavigation, HomeStackList } from './HomeNav';
-import Register from '@/app/Register';
+import Register from '@/screen/Register';
 
 export type MainStackList = {
     Login: undefined;
