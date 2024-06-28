@@ -60,7 +60,7 @@ export default function WriteMenuScreen() {
           contentContainerStyle={styles.listContainer}
         /> 
       </SafeAreaView>
-      <View style={styles.container}>
+      <View style={styles.buttonContainer}>
       <TouchableOpacity 
         style={styles.button}
         onPress={handleReturn}
@@ -77,6 +77,12 @@ export default function WriteMenuScreen() {
 
 const styles = StyleSheet.create({
   container: {
+    flex: 3,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  buttonContainer:{
     flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
@@ -88,7 +94,7 @@ const styles = StyleSheet.create({
   },
   overlay: {
     position: 'absolute',
-    top: 280,
+    top: 100,
     left: 0,
     right: 0,
     bottom: 0,
