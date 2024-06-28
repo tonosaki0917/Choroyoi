@@ -27,7 +27,12 @@ export default function HomeScreen() {
   //画面がフォーカスされたときに実行される
   useFocusEffect(
     useCallback(() =>{
-      setMenuItems(newMenuItems);
+      if (newMenuItems.length == 0) {
+        setMenuItems("設定されていません");
+      }
+      else{
+        setMenuItems(newMenuItems);
+      }
     }, [])
   )
 

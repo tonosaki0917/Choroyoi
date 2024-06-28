@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
-import { Dimensions } from 'react-native';
+import { Dimensions, FlatList } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { HomeStackList } from '@/navigation/HomeNav';
 import { NavigationProp } from '@react-navigation/native';
@@ -12,32 +12,28 @@ import { updateMenuItems } from '../HomeScreen';
 
 type Navigation = NavigationProp<HomeStackList>;
 
-type CheckboxStates = {
-  [key: string]: boolean;
-};
+//ここを追加・編集
+const options = ["ビール", "焼酎", "梅酒","サワー","日本酒","酒１","酒２","酒３","酒４","酒５","鮭","a","b","c","d","e","f","g"];
+
+//表示列数
+const colum = 2;
 
 export default function WriteMenuScreen() {
   const navigation = useNavigation<Navigation>();
 
-  const [checkboxStates, setCheckboxStates] = useState<CheckboxStates>({
-    op1: false,
-    op2: false,
-    op3: false,
-    op4: false,
-    op5: false
-  });
+  const [checkboxStates, setCheckboxStates] = useState<boolean[]>(new Array(options.length).fill(false));
+
   //チェックボックスのボタンを押したとき
-  const handleValueChange = (key: string) => {
-    setCheckboxStates((prevStates) => ({
-      ...prevStates,
-      [key]: !prevStates[key],
-    }));
+  const handleValueChange = (index: number) => {
+    const newStates = [...checkboxStates];
+    newStates[index] = !newStates[index];
+    setCheckboxStates(newStates);
   };
 
   //Returnが押されたとき
   const handleReturn = () => {
-    const selectedItems = Object.keys(checkboxStates) //全てのキーを取得
-      .filter((key) => checkboxStates[key]) //値がtrueであるキーのみを取得
+    const selectedItems = options //全てのキーを取得
+      .filter((_, index) => checkboxStates[index]) //値がtrueであるキーのみを取得
       .join("/")
 
     updateMenuItems(selectedItems);
@@ -50,31 +46,19 @@ export default function WriteMenuScreen() {
   return (
     <View style={styles.container}>
       <SafeAreaView style={styles.container}>
-        <Checkbox
-          label='ビール'
-          value={checkboxStates.op1}
-          onValueChange={() => {console.log("click check box"); handleValueChange("op1")}}
-        />
-        <Checkbox
-          label='焼酎'
-          value={checkboxStates.op2}
-          onValueChange={() => {console.log("click check box"); handleValueChange("op2")}}
-        />
-        <Checkbox
-          label='梅酒'
-          value={checkboxStates.op3}
-          onValueChange={() => {console.log("click check box"); handleValueChange("op3")}}
-        />
-        <Checkbox
-          label='サワー'
-          value={checkboxStates.op4}
-          onValueChange={() => {console.log("click check box"); handleValueChange("op4")}}
-        />
-        <Checkbox
-          label='日本酒'
-          value={checkboxStates.op5}
-          onValueChange={() => {console.log("click check box"); handleValueChange("op5")}}
-        />
+        <FlatList
+          data = {options}
+          renderItem={({item,index}) =>
+            <Checkbox
+              label={item}
+              value={checkboxStates[index]}
+              onValueChange={() => {console.log("click check box"); handleValueChange(index)}}
+            />
+          }
+          keyExtractor={(item, index) => index.toString()}
+          numColumns={colum} // 2列に設定
+          contentContainerStyle={styles.listContainer}
+        /> 
       </SafeAreaView>
       <View style={styles.container}>
       <TouchableOpacity 
@@ -98,9 +82,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  listContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   overlay: {
     position: 'absolute',
-    top: 205,
+    top: 280,
     left: 0,
     right: 0,
     bottom: 0,
