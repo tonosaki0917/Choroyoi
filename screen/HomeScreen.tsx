@@ -1,17 +1,35 @@
 import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 import { Dimensions } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import { HomeStackList } from '@/navigation/HomeNav';
 import { NavigationProp } from '@react-navigation/native';
 import Menu from '@/components/Menu';
 import VerticalText from '../components/VerticalText';
 
+import { useState, useEffect, useCallback } from 'react';
+
 type Navigation = NavigationProp<HomeStackList>;
+
+let newMenuItems = "ビール/焼酎/梅酒/サワー"; //変数menuItemsを設定、/（スラッシュ）で改行
+
+//表示させるメニューの変更（更新は行われない）
+//データベースを設定したら、そこから取り出す方がよいと思われる
+export function updateMenuItems(newItems: string){
+  newMenuItems = newItems;
+}
 
 export default function HomeScreen() {
   const navigation = useNavigation<Navigation>();
   const { width, height } = Dimensions.get('window');
-  const menuItems = "ビール/焼酎/梅酒/サワー/"; //変数menuItemsを設定、/（スラッシュ）で改行
+
+  const [menuItems, setMenuItems] = useState(newMenuItems);
+
+  //画面がフォーカスされたときに実行される
+  useFocusEffect(
+    useCallback(() =>{
+      setMenuItems(newMenuItems);
+    }, [])
+  )
 
   return (
     <View style={styles.container}>

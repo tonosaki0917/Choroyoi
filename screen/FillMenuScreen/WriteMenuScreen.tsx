@@ -8,6 +8,8 @@ import { NavigationProp } from '@react-navigation/native';
 import Checkbox from '@/components/CheckBox';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
+import { updateMenuItems } from '../HomeScreen';
+
 type Navigation = NavigationProp<HomeStackList>;
 
 type CheckboxStates = {
@@ -34,12 +36,11 @@ export default function WriteMenuScreen() {
 
   //Returnが押されたとき
   const handleReturn = () => {
-    const selectedItems = Object.keys(checkboxStates)
-      .filter((key) => checkboxStates[key])
-      .reduce((obj:CheckboxStates, key) => {
-        obj[key] = checkboxStates[key];
-        return obj;
-      }, {});
+    const selectedItems = Object.keys(checkboxStates) //全てのキーを取得
+      .filter((key) => checkboxStates[key]) //値がtrueであるキーのみを取得
+      .join("/")
+
+    updateMenuItems(selectedItems);
       
     console.log("Selected Items: ", selectedItems);
     navigation.navigate('Home')
