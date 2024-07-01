@@ -11,7 +11,7 @@ type Navigation = NavigationProp<HomeStackList>;
 export default function HomeScreen() {
   const navigation = useNavigation<Navigation>();
   const { width, height } = Dimensions.get('window');
-  const menuItems = "ビール/焼酎/梅酒/サワー/"; //変数menuItemsを設定、/（スラッシュ）で改行
+  const menuItems = "ビール/焼酎/梅酒/レモンサワー/グレープフルーツサワー/カルピスサワー/トマトサワー/キウイサワー/ワイン/カシオレ/コーラハイボール/ジンジャーハイボール/日本酒/ジンソーダ/ウーロンハイ/"; //変数menuItemsを設定、/（スラッシュ）で改行
 
   return (
     <View style={styles.container}>
