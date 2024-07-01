@@ -17,8 +17,8 @@ const Menu = ({ menuItems, radius, justifyContent, alignItems }: Props) => {
     const styles = StyleSheet.create({
         container: {
             backgroundColor: "#F8DFC5",
-            height: '45%',
-            width: '95%',
+            height: '60%',
+            width: '100%',
             borderRadius: radius,
             justifyContent: justifyContent,
             alignItems: alignItems,
