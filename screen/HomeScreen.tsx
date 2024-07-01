@@ -10,7 +10,7 @@ import { useState, useEffect, useCallback } from 'react';
 
 type Navigation = NavigationProp<HomeStackList>;
 
-let newMenuItems = "ビール/焼酎/梅酒/サワー"; //変数menuItemsを設定、/（スラッシュ）で改行
+let newMenuItems = "ビール/焼酎/梅酒/レモンサワー/グレープフルーツサワー/カルピスサワー/トマトサワー/キウイサワー/ワイン/カシオレ/コーラハイボール/ジンジャーハイボール/日本酒/ジンソーダ/ウーロンハイ/"; //変数menuItemsを設定、/（スラッシュ）で改行
 
 //表示させるメニューの変更（更新は行われない）
 //データベースを設定したら、そこから取り出す方がよいと思われる
@@ -38,13 +38,36 @@ export default function HomeScreen() {
 
   return (
     <View style={styles.container}>
+      <View style={styles.menuContainer}>
+      <View style={styles.buttonContainer}>
+              <TouchableOpacity 
+                style={styles.button}
+                onPress={() => navigation.navigate('WriteMenu')}
+                >
+                <Text style={styles.font}>
+                  W
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity 
+              style={styles.button}
+              onPress={() => navigation.navigate('TakePhoto')}
+              >
+                <Text style={styles.font}>
+                  T
+                </Text>
+              </TouchableOpacity>
+        </View>
+      <View style={styles.menu}>
         <Menu
                 menuItems={menuItems}
-                radius={15}
+                radius={8}
                 justifyContent='center'
                 alignItems='center'
               >
               </Menu>
+        </View>
+        
+        </View>
         <TouchableOpacity 
         style={styles.button}
         onPress={() => navigation.navigate('Profile')}
@@ -69,22 +92,8 @@ export default function HomeScreen() {
             Result
           </Text>
         </TouchableOpacity>
-        <TouchableOpacity 
-        style={styles.button}
-        onPress={() => navigation.navigate('TakePhoto')}
-        >
-          <Text style={styles.font}>
-            TakePhoto
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity 
-        style={styles.button}
-        onPress={() => navigation.navigate('WriteMenu')}
-        >
-          <Text style={styles.font}>
-            WriteMenu
-          </Text>
-        </TouchableOpacity>
+        
+        
       </View>
   );
 }
@@ -100,32 +109,38 @@ const styles = StyleSheet.create({
   },
   menuContainer: {
     flex: 1,
-    backgroundColor: '#F7DEC4',
-    alignItems: 'center',
-    justifyContent: 'center',
-    height: 30,
-    width: 60,
+    flexDirection: 'row-reverse',
+    paddingHorizontal: 10, // 左右の余白を追加
   },
-  overlay: {
-    position: 'absolute',
-    top: 205,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    justifyContent: 'center',
+  menu: {
+    flex: 0,
+    flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'center',
+  },
+  buttonContainer: {
+    flex: 1,
+    alignSelf: 'center',
+    alignItems: 'flex-end', // 要素を右揃え
+    resizeMode: 'contain', 
+    flexDirection: 'column',
+    justifyContent: 'flex-end', 
+    zIndex: 999,
+    marginBottom: '5%',
   },
   button: {
-    width: 170, 
-    backgroundColor: 'white',
+    borderColor: 'black',
+    borderWidth: 3,
+    width: 50,
+    height: 50, 
+    borderRadius: 90,
+    backgroundColor: '#F7DEC4',
     padding: 0,
     alignItems: 'center',
-    borderRadius: 5,
-    borderColor: 'black',
   },
   font: {
     color: 'black', 
-    fontSize: 5,
+    fontSize: 25,
     letterSpacing: 5,
     padding: 1
   }

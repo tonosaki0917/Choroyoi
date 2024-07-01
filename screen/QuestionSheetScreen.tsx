@@ -60,7 +60,7 @@ export default function QuestionSheetScreen() {
     } else {
       // アンケート終了処理
       console.log('アンケート終了');
-      navigation.navigate("Home");
+      navigation.navigate("RouteHome");
     }
   };
 

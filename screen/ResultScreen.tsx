@@ -14,7 +14,7 @@ export default function ResultScreen() {
       <View style={styles.overlay}>
       <TouchableOpacity 
         style={styles.button}
-        onPress={() => navigation.navigate('Home')}
+        onPress={() => navigation.navigate('RouteHome')}
         >
           <Text style={styles.font}>
             Return Home

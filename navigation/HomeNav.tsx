@@ -11,7 +11,7 @@ import TakePhotoScreen from '../screen/FillMenuScreen/TakePhotoScreen';
 import WriteMenuScreen from '../screen/FillMenuScreen/WriteMenuScreen';
 
 export type HomeStackList = {
-    Home: undefined;
+    RouteHome: undefined;
     Profile: undefined;
     Question: undefined;
     QuestionSheet: undefined;
@@ -25,8 +25,8 @@ const Stack = createStackNavigator<HomeStackList>();
 export function HomeNavigation() {
   
     return (
-      <Stack.Navigator initialRouteName="Home">
-        <Stack.Screen name="Home" component={HomeScreen} options={{ headerShown: false }} />
+      <Stack.Navigator initialRouteName="RouteHome">
+        <Stack.Screen name="RouteHome" component={HomeScreen} options={{ headerShown: false }} />
         <Stack.Screen name="Profile" component={ProfileScreen} options={{ headerShown: false }}/>
         <Stack.Screen name="Question" component={QuestionScreen} options={{ headerShown: false }}/>
         <Stack.Screen name="QuestionSheet" component={QuestionSheetScreen} options={{ headerShown: false }}/>

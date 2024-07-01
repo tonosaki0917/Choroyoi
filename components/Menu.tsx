@@ -1,21 +1,24 @@
 import React from "react";
 import { View, Text, StyleSheet } from 'react-native';
 import VerticalText from "./VerticalText";
-import { useFonts } from 'expo-font';
 
 interface Props {
     menuItems: string; // メニュー項目
-    radius: number;        // 角丸の半径
+    radius: number;    // 角丸の半径
     justifyContent: 'center' | 'flex-start' | 'flex-end' | 'space-between' | 'space-around' | 'space-evenly';
     alignItems: 'flex-start' | 'center' | 'flex-end' | 'stretch' | 'baseline';
 }
 
 const Menu = ({ menuItems, radius, justifyContent, alignItems }: Props) => {
+    const items = menuItems.split('/');
+    const fontSize = items.length >= 10 ? 10 : 15;
+    const numColumns = items.length >= 10 ? 2 : 1;
+
     const styles = StyleSheet.create({
         container: {
             backgroundColor: "#F8DFC5",
-            height: '45%',
-            width: '95%',
+            height: '60%',
+            width: '100%',
             borderRadius: radius,
             justifyContent: justifyContent,
             alignItems: alignItems,
@@ -24,30 +27,64 @@ const Menu = ({ menuItems, radius, justifyContent, alignItems }: Props) => {
             padding: 10,
         },
         menuItemText: {
-            fontSize: 15,
+            fontSize: fontSize,
             color: '#22110E',
             textAlign: 'center',
-            flexWrap: 'wrap', // テキストの折り返し
-            marginTop: 10, // 上部マージンを追加して余白を確保
-            textAlignVertical: 'center', // 垂直方向の中央揃え
+            flexWrap: 'wrap',
+            marginTop: 10,
+            textAlignVertical: 'center',
+            flex: 1,
         },
         titleText: {
             fontSize: 30,
             textAlign: 'center',
-            top: '5%', // 上部に配置
-            left: 0,
-            right: '20%',
+            position: 'absolute',
+            right: 10,
+            top: 10,
         },
+        columnContainer: {
+            flexDirection: 'column',
+            flex: 1,
+        },
+        column: {
+            flex: 1,
+            justifyContent: 'center',
+            alignItems: 'center',
+        }
     });
+
+    const renderColumns = () => {
+        if (numColumns === 1) {
+            return (
+                <View style={styles.column}>
+                    <VerticalText text={menuItems} fontSize={fontSize} />
+                </View>
+            );
+        } else {
+            const halfIndex = Math.ceil(items.length / 2);
+            const firstHalf = items.slice(0, halfIndex).join('/');
+            const secondHalf = items.slice(halfIndex).join('/');
+            return (
+                <View style={styles.columnContainer}>
+                    <View style={styles.column}>
+                        <VerticalText text={firstHalf} fontSize={fontSize} />
+                    </View>
+                    <View style={styles.column}>
+                        <VerticalText text={secondHalf} fontSize={fontSize} />
+                    </View>
+                </View>
+            );
+        }
+    };
 
     return (
         <View style={styles.container}>
             <Text style={styles.titleText}>
                 <VerticalText text="お品がき" fontSize={30} />
             </Text>
-            <Text style={styles.menuItemText}>
-                <VerticalText text={menuItems} fontSize={15} />
-            </Text>
+            <View style={styles.menuItemText}>
+                {renderColumns()}
+            </View>
         </View>
     );
 }
