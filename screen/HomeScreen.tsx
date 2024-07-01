@@ -21,7 +21,6 @@ export function updateMenuItems(newItems: string){
 export default function HomeScreen() {
   const navigation = useNavigation<Navigation>();
   const { width, height } = Dimensions.get('window');
-
   const [menuItems, setMenuItems] = useState(newMenuItems);
 
   //画面がフォーカスされたときに実行される
@@ -35,6 +34,7 @@ export default function HomeScreen() {
       }
     }, [])
   )
+
 
   return (
     <View style={styles.container}>
