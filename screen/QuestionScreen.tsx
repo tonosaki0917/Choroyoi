@@ -12,9 +12,17 @@ export default function QuestionScreen() {
   return (
     <View style={styles.container}>
       <View style={styles.overlay}>
-      <TouchableOpacity 
-        style={styles.button}
-        onPress={() => navigation.navigate('Home')}
+        <TouchableOpacity 
+          style={styles.button}
+          onPress={() => navigation.navigate('QuestionSheet')}
+        >
+          <Text style={styles.font}>
+            Start Quetioner
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity 
+          style={styles.button}
+          onPress={() => navigation.navigate('Home')}
         >
           <Text style={styles.font}>
             Return Home
