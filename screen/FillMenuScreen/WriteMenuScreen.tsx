@@ -39,7 +39,7 @@ export default function WriteMenuScreen() {
     updateMenuItems(selectedItems);
       
     console.log("Selected Items: ", selectedItems);
-    navigation.navigate('Home')
+    navigation.navigate('RouteHome')
   }
 
   const { width, height } = Dimensions.get('window');

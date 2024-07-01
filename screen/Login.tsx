@@ -24,7 +24,7 @@ export default function Login() {
       console.log(user.displayName);
       console.log(user.uid);
       alert("Hello, " + user.displayName);
-      navigation.navigate('Home', {screen: 'Home'});
+      navigation.navigate('Home', {screen: 'RouteHome'});
     } catch (error) {
       console.log(error);
     }     
