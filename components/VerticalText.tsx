@@ -9,6 +9,25 @@ interface Props {
 const VerticalText: React.FC<Props> = ({ text, fontSize }) => {
   const lines = text.split('/'); // "/"でテキストを分割
   
+  const styles = StyleSheet.create({
+    horizontalTextContainer: {
+      flexDirection: 'row',
+      justifyContent: 'center',
+      alignItems: 'center',
+      flexWrap: 'wrap', // テキストの折り返し
+    },
+    verticalTextContainer: {
+      flexDirection: 'column',
+      alignItems: 'center',
+      marginHorizontal: 5, // 横方向の余白を追加
+    },
+    verticalText: {
+      color: '#22110E',
+      textAlign: 'center',
+      fontSize: fontSize, // 動的に受け取ったfontSizeを適用
+    },
+  });
+
   return (
     <View style={styles.horizontalTextContainer}>
       {lines.map((line: string, lineIndex: number) => (
@@ -17,7 +36,7 @@ const VerticalText: React.FC<Props> = ({ text, fontSize }) => {
             // "ー"を縦の伸ばし棒に置き換える
             const displayChar = char === 'ー' ? '｜' : char;
             return (
-              <Text key={charIndex} style={[styles.verticalText, { fontSize }]}>
+              <Text key={charIndex} style={styles.verticalText}>
                 {displayChar}
               </Text>
             );
@@ -27,23 +46,5 @@ const VerticalText: React.FC<Props> = ({ text, fontSize }) => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  horizontalTextContainer: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    flexWrap: 'wrap', // テキストの折り返し
-  },
-  verticalTextContainer: {
-    flexDirection: 'column',
-    alignItems: 'center',
-    marginHorizontal: 5, // 横方向の余白を追加
-  },
-  verticalText: {
-    color: '#22110E',
-    textAlign: 'center',
-  },
-});
 
 export default VerticalText;

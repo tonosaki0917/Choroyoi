@@ -10,7 +10,7 @@ import { useState, useEffect, useCallback } from 'react';
 
 type Navigation = NavigationProp<HomeStackList>;
 
-let newMenuItems = "ビール/焼酎/梅酒/サワー"; //変数menuItemsを設定、/（スラッシュ）で改行
+let newMenuItems = "ビール/焼酎/梅酒/レモンサワー/グレープフルーツサワー/カルピスサワー/トマトサワー/キウイサワー/ワイン/カシオレ/コーラハイボール/ジンジャーハイボール/日本酒/ジンソーダ/ウーロンハイ/"; //変数menuItemsを設定、/（スラッシュ）で改行
 
 //表示させるメニューの変更（更新は行われない）
 //データベースを設定したら、そこから取り出す方がよいと思われる
@@ -41,7 +41,7 @@ export default function HomeScreen() {
         <Menu
                 menuItems={menuItems}
                 radius={15}
-                justifyContent='center'
+                justifyContent='space-around'
                 alignItems='center'
               >
               </Menu>
