@@ -10,7 +10,7 @@ import { useState, useEffect, useCallback } from 'react';
 
 type Navigation = NavigationProp<HomeStackList>;
 
-let newMenuItems = "ビール/焼酎/梅酒/レモンサワー/グレープフルーツサワー/カルピスサワー/トマトサワー/キウイサワー/ワイン/カシオレ/コーラハイボール/ジンジャーハイボール/日本酒/ジンソーダ/ウーロンハイ/"; //変数menuItemsを設定、/（スラッシュ）で改行
+let newMenuItems = "キウイサワー/ワイン/カシオレ/コーラハイボール/ジンジャーハイボール/日本酒/ジンソーダ/ウーロンハイ/"; //変数menuItemsを設定、/（スラッシュ）で改行
 
 //表示させるメニューの変更（更新は行われない）
 //データベースを設定したら、そこから取り出す方がよいと思われる
@@ -40,6 +40,7 @@ export default function HomeScreen() {
     <View style={styles.container}>
       <View style={styles.menuContainer}>
       <View style={styles.buttonContainer}>
+          <View style={{flex: 0, height: 200}} />{/* 空白 */} 
               <TouchableOpacity 
                 style={styles.button}
                 onPress={() => navigation.navigate('WriteMenu')}
@@ -48,6 +49,7 @@ export default function HomeScreen() {
                   W
                 </Text>
               </TouchableOpacity>
+              <View style={{flex: 0, height: 5}} />{/* 空白 */} 
               <TouchableOpacity 
               style={styles.button}
               onPress={() => navigation.navigate('TakePhoto')}
