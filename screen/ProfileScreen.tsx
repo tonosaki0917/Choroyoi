@@ -4,6 +4,8 @@ import { useNavigation } from '@react-navigation/native';
 import { HomeStackList } from '@/navigation/HomeNav'; 
 import { NavigationProp } from '@react-navigation/native';
 
+import TachableText from '@/components/TachableText';
+
 type Navigation = NavigationProp<HomeStackList>;
 
 export default function ProfileScreen() {
@@ -11,7 +13,12 @@ export default function ProfileScreen() {
   const { width, height } = Dimensions.get('window');
   return (
     <View style={styles.container}>
-      <View style={styles.overlay}>
+      <View style={styles.container}>
+        <TachableText 
+          id={1}>
+        </TachableText>
+      </View>
+      <View style={styles.container}>
         <TouchableOpacity 
         style={styles.button}
         onPress={() => navigation.navigate('RouteHome')}
@@ -55,5 +62,11 @@ const styles = StyleSheet.create({
     fontSize: 30,
     letterSpacing: 5,
     padding: 1
-  }
+  },
+  menu: {
+    flex: 0,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
 });
