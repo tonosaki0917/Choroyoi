@@ -3,19 +3,28 @@ import { Dimensions } from 'react-native';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import { HomeStackList } from '@/navigation/HomeNav';
 import { NavigationProp } from '@react-navigation/native';
-import Menu from '@/components/Menu';
+import NewMenu from '@/components/NewMenu';
 import VerticalText from '../components/VerticalText';
 
 import { useState, useEffect, useCallback } from 'react';
 
 type Navigation = NavigationProp<HomeStackList>;
 
+//今は使ってない
 let newMenuItems = "キウイサワー/ワイン/カシオレ/コーラハイボール/ジンジャーハイボール/日本酒/ジンソーダ/ウーロンハイ/"; //変数menuItemsを設定、/（スラッシュ）で改行
 
 //表示させるメニューの変更（更新は行われない）
 //データベースを設定したら、そこから取り出す方がよいと思われる
+//今は使ってない
 export function updateMenuItems(newItems: string){
   newMenuItems = newItems;
+}
+
+//idで管理
+let newMenuItemsId = [0,1,2,3,4]
+//idリストの更新 <= WriteMenuScreen.tsx
+export function updateMenuItemsId(newIdList: number[]){
+  newMenuItemsId = newIdList;
 }
 
 export default function HomeScreen() {
@@ -23,15 +32,13 @@ export default function HomeScreen() {
   const { width, height } = Dimensions.get('window');
   const [menuItems, setMenuItems] = useState(newMenuItems);
 
+  //idで管理
+  const [menuItemsId, setMenuItemsId] = useState(newMenuItemsId);
+
   //画面がフォーカスされたときに実行される
   useFocusEffect(
     useCallback(() =>{
-      if (newMenuItems.length == 0) {
-        setMenuItems("設定されていません");
-      }
-      else{
-        setMenuItems(newMenuItems);
-      }
+      setMenuItemsId(newMenuItemsId);
     }, [])
   )
 
@@ -60,13 +67,14 @@ export default function HomeScreen() {
               </TouchableOpacity>
         </View>
       <View style={styles.menu}>
-        <Menu
-                menuItems={menuItems}
+          <NewMenu
+                menuItems={menuItemsId}
                 radius={8}
                 justifyContent='center'
                 alignItems='center'
               >
-              </Menu>
+              </NewMenu>
+
         </View>
         
         </View>

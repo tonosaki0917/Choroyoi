@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Text, View, Modal, Button, TouchableOpacity, Image, StyleSheet } from 'react-native';
 
+//database functions
+//形式は変わる可能性あり
+import { getAlchol } from '@/database/todo';
+
 interface Props {
   id: number;
 }
@@ -9,11 +13,6 @@ interface DataType {
   id: number;
   name: string;
   info: string;
-}
-
-//TODO: データベースとの接続
-const getAlchol = (id: number) => {
-  return {id: id, name: "beel", info: "oisii"}
 }
 
 const TachableText: React.FC<Props> = ({ id }) => {

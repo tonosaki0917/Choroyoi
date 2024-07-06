@@ -19,7 +19,7 @@ const VerticalText: React.FC<Props> = ({ text, fontSize }) => {
     verticalTextContainer: {
       flexDirection: 'column',
       alignItems: 'center',
-      marginHorizontal: 5, // 横方向の余白を追加
+      margin: 5, // 横方向の余白を追加
     },
     verticalText: {
       color: '#22110E',
