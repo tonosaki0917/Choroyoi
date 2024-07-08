@@ -4,6 +4,8 @@ import { StyleSheet, Text, View, TouchableOpacity, Image, Dimensions } from 'rea
 import { useNavigation } from '@react-navigation/native';
 import { HomeStackList } from '@/navigation/HomeNav'; 
 import { NavigationProp } from '@react-navigation/native';
+import { ProgressBar } from 'react-native-paper';
+
 
 type Navigation = NavigationProp<HomeStackList>;
 
@@ -15,8 +17,8 @@ type Answer = {
 const questions = [
   {
     id: 'q1',
-    text: '最初の質問です。続けますか？？？',
-    image: require("../assets/images/Login.jpg"),
+    text: '炭酸の気分ですか？',
+    image: require("../assets/images/beer.png"),
     options: {
       yes: 'q2',
       no: 'q3'
@@ -24,8 +26,8 @@ const questions = [
   },
   {
     id: 'q2',
-    text: '二つ目の質問です。次に進みますか？',
-    image: require("../assets/images/icon.png"),
+    text: 'フルーツの気分ですか？',
+    image: require("../assets/images/fruits.png"),
     options: {
       yes: 'q3',
       no: 'q4'
@@ -97,28 +99,38 @@ export default function QuestionSheetScreen() {
   if (!currentQuestion) {
     return <Text>アンケートが見つかりません</Text>;
   }
+  // 進行状況を計算
+  const questionIndex = questions.findIndex(q => q.id === currentQuestionId);
+  const progress = (questionIndex + 1) / questions.length;
 
   return (
     <View style={styles.container}>
-      <Image source={currentQuestion.image} style={{width: width/2, height: height/4, position: 'absolute'}} />
-      <Text style={styles.questionText}>{currentQuestion.text}</Text>
+      <View style={styles.paperContainer}>
+        <TouchableOpacity 
+            style={styles.closeButton} 
+            onPress={() => navigation.navigate("Question")}>
+            <Text style={styles.buttonText}>×</Text>
+          </TouchableOpacity>
+        <View style={styles.imageContainer}>
+          <Text style={styles.questionText}>{currentQuestion.text}</Text>
+          <Image source={currentQuestion.image} style={styles.image} />
+        </View>
+      
       <View style={styles.buttonContainer}>
         <TouchableOpacity 
-          style={styles.button} 
+          style={styles.buttonDark} 
           onPress={() => handleAnswer('yes')}>
           <Text style={styles.buttonText}>はい</Text>
         </TouchableOpacity>
         <TouchableOpacity 
-          style={styles.button} 
+          style={styles.buttonLight} 
           onPress={() => handleAnswer('no')}>
           <Text style={styles.buttonText}>いいえ</Text>
         </TouchableOpacity>
-      </View>
-      <TouchableOpacity 
-          style={styles.closeButton} 
-          onPress={() => navigation.navigate("Question")}>
-          <Text style={styles.buttonText}>×</Text>
-        </TouchableOpacity>
+        </View>
+        <ProgressBar progress={progress} color="#7c3e01" style={styles.progressBar} />
+        </View>
+        <></>
     </View>
   );
 }
@@ -128,31 +140,76 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#fff',
+    backgroundColor: '#3d2c25',
+  },
+  paperContainer: {
+    flex: 0,
+    backgroundColor: '#f2e2d2',
+    width: '100%',
+    height: '90%',
+    borderRadius: 20,
+  },
+  imageContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: '20%',
+    marginBottom: '10%',
+  },
+  image: {
+    flex: 0,
+    height: 280,
+    width: 280,
+    resizeMode: 'contain',
   },
   questionText: {
-    fontSize: 24,
-    marginBottom: 400,
+    fontSize: 28,
+    textAlign: 'center',
+  },
+  progressBar: {
+    height: 10,
+    width: '90%',
+    alignSelf: 'center',
+    marginVertical: 10,
   },
   buttonContainer: {
     flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
-  button: {
-    backgroundColor: '#007BFF',
+  buttonDark: {
+    backgroundColor: '#8c522c',
+    width: 150,
+    height: 65,
     padding: 10,
     margin: 10,
-    borderRadius: 5,
+    borderRadius: 15,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  buttonLight: {
+    backgroundColor: '#996d48',
+    width: 150,
+    height: 65,
+    padding: 10,
+    margin: 10,
+    borderRadius: 15,
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   buttonText: {
-    color: '#fff',
-    fontSize: 18,
+    color: '#ffefe2',
+    fontSize: 25,
   },
   closeButton: {
     position: 'absolute',
-    backgroundColor: '#101010',
-    top: 50,
-    right: 20,
+    backgroundColor: '#753e06',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: 50,
+    height: 50,
+    top: '3%',
+    right: '4%',
     padding: 10,
-    borderRadius: 5,
+    borderRadius: 90,
   },
 });
