@@ -44,8 +44,8 @@ const questions = [
   },
   {
     id: 'q4',
-    text: '本当の二つ目の質問です。次に進みますか？',
-    image: require("../assets/images/Login.jpg"),
+    text: '甘いお酒がいいですか？',
+    image: require("../assets/images/sweet.png"),
     options: {
       yes: 'q3',
       no: 'q1'
