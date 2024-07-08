@@ -11,8 +11,6 @@ import { auth } from '@/App';
 
 type Navigation = NavigationProp<HomeStackList>;
 
-
-
 export default function Setting() {
   const [username, setUsername] = useState('');
   const navigation = useNavigation<Navigation>();

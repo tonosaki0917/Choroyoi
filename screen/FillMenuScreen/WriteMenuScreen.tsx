@@ -8,12 +8,14 @@ import { NavigationProp } from '@react-navigation/native';
 import Checkbox from '@/components/CheckBox';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { updateMenuItems } from '../HomeScreen';
+import { updateMenuItemsId } from '../HomeScreen';
+
+import { getAlchol } from '@/database/todo';
 
 type Navigation = NavigationProp<HomeStackList>;
 
 //ここを追加・編集
-const options = ["ビール", "焼酎", "梅酒","サワー","日本酒","酒１","酒２","酒３","酒４","酒５","鮭","a","b","c","d","e","f","g"];
+const idOptions = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17]
 
 //表示列数
 const colum = 2;
@@ -21,7 +23,17 @@ const colum = 2;
 export default function WriteMenuScreen() {
   const navigation = useNavigation<Navigation>();
 
-  const [checkboxStates, setCheckboxStates] = useState<boolean[]>(new Array(options.length).fill(false));
+  const [checkboxStates, setCheckboxStates] = useState<boolean[]>(new Array(idOptions.length).fill(false));
+
+  //idOptionsから名前を取得
+  const getNamefromIdList = (idList: number[]) => {
+    let nameList = [];
+    for (let id of idList){
+      let data = getAlchol(id)
+      nameList.push(data.name)
+    }
+    return nameList
+  }
 
   //チェックボックスのボタンを押したとき
   const handleValueChange = (index: number) => {
@@ -32,22 +44,23 @@ export default function WriteMenuScreen() {
 
   //Returnが押されたとき
   const handleReturn = () => {
-    const selectedItems = options //全てのキーを取得
-      .filter((_, index) => checkboxStates[index]) //値がtrueであるキーのみを取得
-      .join("/")
+    const selectedItems = idOptions //全てのキーを取得
+      .filter((_, index) => checkboxStates[index]); //値がtrueであるキーのみを取得
 
-    updateMenuItems(selectedItems);
+    updateMenuItemsId(selectedItems);
       
     console.log("Selected Items: ", selectedItems);
     navigation.navigate('RouteHome')
   }
+
+  const nameList = getNamefromIdList(idOptions);
 
   const { width, height } = Dimensions.get('window');
   return (
     <View style={styles.container}>
       <SafeAreaView style={styles.container}>
         <FlatList
-          data = {options}
+          data = {nameList}
           renderItem={({item,index}) =>
             <Checkbox
               label={item}

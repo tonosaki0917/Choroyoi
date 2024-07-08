@@ -9,6 +9,11 @@ import { ProgressBar } from 'react-native-paper';
 
 type Navigation = NavigationProp<HomeStackList>;
 
+type Answer = {
+  id: string;
+  ans: 'yes' | 'no' | null;
+};
+
 const questions = [
   {
     id: 'q1',
@@ -48,21 +53,44 @@ const questions = [
   },
 ];
 
+const initialAnswers : Answer[] = questions.map((question: any) => ({
+  id:question.id,
+  ans: null
+}))
+//[{id:'q1', ans:null}]
+
 export default function QuestionSheetScreen() {
   const navigation = useNavigation<Navigation>();
   const [currentQuestionId, setCurrentQuestionId] = useState('q1');
+  const [answers, setAnswers] = useState(initialAnswers);
 
   const { width, height } = Dimensions.get('window');
 
   const handleAnswer = (answer: 'yes' | 'no') => {
+
+    const getUpdateAnswers = (prevAnswers: Answer[]) => {
+      return prevAnswers.map(ans => {
+        if (ans.id === currentQuestionId) {
+          return { ...ans, ans: answer };
+        } else {
+          return ans;
+        }
+      });
+    };
+
+    const updatedAnswers = getUpdateAnswers(answers);
+    setAnswers(updatedAnswers);
+
     const currentQuestion = questions.find(q => q.id === currentQuestionId);
     const nextQuestionId = currentQuestion?.options[answer];
+
     if (nextQuestionId) {
       setCurrentQuestionId(nextQuestionId);
     } else {
       // アンケート終了処理
       console.log('アンケート終了');
       navigation.navigate("RouteHome");
+      console.log(updatedAnswers);
     }
   };
 
