@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, FlatList, StyleSheet } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import TachableText from "./TachableText";
 
 interface Props {
@@ -11,18 +11,23 @@ interface Props {
 
 const NewMenu = ({ menuItems, radius, justifyContent, alignItems }: Props) => {
     const fontSize = menuItems.length >= 10 ? 10 : 15;
-    const numColumns = menuItems.length >= 10 ? 2 : 1;
+    let numColumns = 1;
+    if (menuItems.length >= 9) {
+        numColumns = 3;
+    } else if (menuItems.length >= 6) {
+        numColumns = 2;
+    }
 
     const styles = StyleSheet.create({
         container: {
-            backgroundColor: "#F8DFC5",
-            height: '60%',
+            flex: 0,
+            backgroundColor: "#f1e1d1",
+            height: '50%',
             width: '100%',
             borderRadius: radius,
             justifyContent: justifyContent,
             alignItems: alignItems,
             flexDirection: 'row-reverse',
-            position: 'relative',
             padding: 10,
         },
         menuItemText: {
@@ -34,16 +39,10 @@ const NewMenu = ({ menuItems, radius, justifyContent, alignItems }: Props) => {
             textAlignVertical: 'center',
             flex: 1,
         },
-        titleText: {
-            fontSize: 30,
-            textAlign: 'center',
-            position: 'absolute',
-            right: 10,
-            top: 10,
-        },
         columnContainer: {
-            flexDirection: 'column',
             flex: 1,
+            alignItems: 'center',
+            flexDirection: 'row',
         },
         column: {
             flex: 1,
@@ -53,40 +52,32 @@ const NewMenu = ({ menuItems, radius, justifyContent, alignItems }: Props) => {
     });
 
     const renderColumns = () => {
-        if (numColumns === 1) {
-            return (
-                <View style={styles.column}>
-                    {menuItems.map((item: number, itemIndex: number) => 
-                        <TachableText id={item}/>)
-                    }           
-                </View>
-            );
-        } else {
-            const halfIndex = Math.ceil(menuItems.length / 2);
-            const firstHalf = menuItems.slice(0, halfIndex);
-            const secondHalf = menuItems.slice(halfIndex);
-            return (
-                <View style={styles.columnContainer}>
-                    <View style={styles.column}>
-                        {firstHalf.map((item: number, itemIndex: number) => 
-                            <TachableText id={item}/>)
-                        }  
-                    </View>
-                    <View style={styles.column}>
-                        {secondHalf.map((item: number, itemIndex: number) => 
-                            <TachableText id={item}/>)
-                        } 
-                    </View>
+        const columnLength = Math.ceil(menuItems.length / numColumns);
+        const columns = [];
+
+        for (let i = 0; i < numColumns; i++) {
+            const start = i * columnLength;
+            const end = start + columnLength;
+            const items = menuItems.slice(start, end);
+
+            columns.push(
+                <View key={i} style={styles.column}>
+                    {items.map((item: number) => 
+                        <TachableText key={item} id={item}/>
+                    )}
                 </View>
             );
         }
+
+        return (
+            <View style={styles.columnContainer}>
+                {columns}
+            </View>
+        );
     };
 
     return (
         <View style={styles.container}>
-            <Text style={styles.titleText}>
-                <Text>お品がき </Text>
-            </Text>
             <View style={styles.menuItemText}>
                 {renderColumns()}
             </View>

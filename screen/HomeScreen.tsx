@@ -4,7 +4,8 @@ import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import { HomeStackList } from '@/navigation/HomeNav';
 import { NavigationProp } from '@react-navigation/native';
 import NewMenu from '@/components/NewMenu';
-import VerticalText from '../components/VerticalText';
+import { Entypo } from '@expo/vector-icons';
+import Feather from '@expo/vector-icons/Feather';
 
 import { useState, useEffect, useCallback } from 'react';
 
@@ -45,28 +46,26 @@ export default function HomeScreen() {
 
   return (
     <View style={styles.container}>
-      <View style={styles.menuContainer}>
-      <View style={styles.buttonContainer}>
-          <View style={{flex: 0, height: 200}} />{/* 空白 */} 
+      <View style={styles.menuContainerL}>
+      <View style={styles.titleContainer}>
+      <Text style={styles.titleText}>
+              <Text>お品がき </Text>
+          </Text>
+      <View style={styles.menuButton}>
               <TouchableOpacity 
-                style={styles.button}
+                style={styles.buttonDark}
                 onPress={() => navigation.navigate('WriteMenu')}
                 >
-                <Text style={styles.font}>
-                  W
-                </Text>
+                <Entypo name="edit" size={24} color= '#ffefe2'/>
               </TouchableOpacity>
-              <View style={{flex: 0, height: 5}} />{/* 空白 */} 
               <TouchableOpacity 
-              style={styles.button}
+              style={styles.buttonLight}
               onPress={() => navigation.navigate('TakePhoto')}
               >
-                <Text style={styles.font}>
-                  T
-                </Text>
+                <Entypo name="camera" size={24} color= '#ffefe2'/>
               </TouchableOpacity>
         </View>
-      <View style={styles.menu}>
+          </View>
           <NewMenu
                 menuItems={menuItemsId}
                 radius={8}
@@ -74,37 +73,45 @@ export default function HomeScreen() {
                 alignItems='center'
               >
               </NewMenu>
-
-        </View>
-        
-        </View>
+        <View style={styles.buttonRow}>
+          <View style={styles.buttonColumn}>
+              <TouchableOpacity 
+              style={styles.buttonQuestion}
+              onPress={() => navigation.navigate('Question')}
+              >
+              <Image 
+              source={require("../assets/images/checkboard.png")}
+              style={styles.imageStyle}
+              />
+                <Text style={styles.font}>
+                  Question
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity 
+              style={styles.buttonProfile}
+              onPress={() => navigation.navigate('Profile')}
+              >
+                <Text style={styles.font}>
+                  Profile
+                </Text>
+                <Feather name="user" size={30} color= '#ffefe2'/>
+              </TouchableOpacity>
+          </View>
         <TouchableOpacity 
-        style={styles.button}
-        onPress={() => navigation.navigate('Profile')}
-        >
-          <Text style={styles.font}>
-            Profile
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity 
-        style={styles.button}
-        onPress={() => navigation.navigate('Question')}
-        >
-          <Text style={styles.font}>
-            Question
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity 
-        style={styles.button}
+        style={styles.buttonResult}
         onPress={() => navigation.navigate('Result')}
         >
+          <Image 
+              source={require("../assets/images/bell.png")}
+              style={styles.bellimage}
+              />
           <Text style={styles.font}>
             Result
           </Text>
         </TouchableOpacity>
-        
-        
       </View>
+      </View>
+    </View>
   );
 }
 
@@ -112,31 +119,115 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#A15D44',
+    backgroundColor: '#3d2c25',
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
   },
-  menuContainer: {
-    flex: 1,
-    flexDirection: 'row-reverse',
-    paddingHorizontal: 10, // 左右の余白を追加
-  },
-  menu: {
+  titleContainer: {
     flex: 0,
+    flexDirection: 'row',
+    alignItems: 'flex-end',
+    justifyContent: 'space-between',
+    width: '100%',
+    paddingHorizontal: 10,
+    paddingTop: 10,
+  },
+  menuContainerL: {
+    flex: 1,
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  buttonColumn: {
+    flex: 1,
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: '100%',
+  },
+  buttonRow: {
+    flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
+    marginTop: 10,
   },
-  buttonContainer: {
-    flex: 1,
-    alignSelf: 'center',
-    alignItems: 'flex-end', // 要素を右揃え
-    resizeMode: 'contain', 
-    flexDirection: 'column',
-    justifyContent: 'flex-end', 
-    zIndex: 999,
-    marginBottom: '5%',
+  titleText: {
+    color: '#ffefe2', 
+    fontSize: 30,
+    padding: 1
+  },
+  imageStyle: {
+    flex: 0,
+    height: 100,
+    width: 100,
+    resizeMode: 'contain',
+  },
+  bellimage: {
+    flex: 0,
+    height: 150,
+    width: 150,
+    resizeMode: 'contain',
+  },
+  menuButton: {
+    flex: 0,
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    alignItems: 'flex-end',
+    padding: 5,
+    borderRadius: 90,
+  },
+  buttonDark: {
+    backgroundColor: '#8c522c',
+    width: 50,
+    height: 50,
+    padding: 10,
+    margin: 5,
+    borderRadius: 15,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  buttonLight: {
+    backgroundColor: '#996d48',
+    width: 50,
+    height: 50,
+    padding: 10,
+    margin: 5,
+    borderRadius: 15,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  buttonQuestion: {
+    backgroundColor: '#8c522c',
+    width: '100%',
+    height: '55%',
+    padding: 5,
+    margin: 5,
+    borderRadius: 15,
+    justifyContent: 'flex-end',
+    alignItems: 'center'
+  },
+  buttonProfile: {
+    backgroundColor: '#996d48',
+    flexDirection: 'row',
+    width: '100%',
+    height: '25%',
+    padding: 5,
+    margin: 5,
+    borderRadius: 15,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  buttonResult: {
+    backgroundColor: '#bb7334',
+    width: '50%',
+    height: '85%',
+    padding: 5,
+    margin: 10,
+    borderRadius: 15,
+    justifyContent: 'flex-end',
+    alignItems: 'center'
   },
   button: {
     borderColor: 'black',
@@ -144,14 +235,13 @@ const styles = StyleSheet.create({
     width: 50,
     height: 50, 
     borderRadius: 90,
-    backgroundColor: '#F7DEC4',
+    backgroundColor: '#753e06',
     padding: 0,
     alignItems: 'center',
   },
   font: {
-    color: 'black', 
+    color: '#ffefe2', 
     fontSize: 25,
-    letterSpacing: 5,
     padding: 1
   }
 });
