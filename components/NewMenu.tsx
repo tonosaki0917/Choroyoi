@@ -22,7 +22,7 @@ const NewMenu = ({ menuItems, radius, justifyContent, alignItems }: Props) => {
         container: {
             flex: 0,
             backgroundColor: "#f1e1d1",
-            height: '60%',
+            height: '50%',
             width: '100%',
             borderRadius: radius,
             justifyContent: justifyContent,

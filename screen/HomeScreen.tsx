@@ -4,7 +4,8 @@ import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import { HomeStackList } from '@/navigation/HomeNav';
 import { NavigationProp } from '@react-navigation/native';
 import NewMenu from '@/components/NewMenu';
-import { Entypo } from '@expo/vector-icons'
+import { Entypo } from '@expo/vector-icons';
+import Feather from '@expo/vector-icons/Feather';
 
 import { useState, useEffect, useCallback } from 'react';
 
@@ -72,32 +73,45 @@ export default function HomeScreen() {
                 alignItems='center'
               >
               </NewMenu>
-      </View>
+        <View style={styles.buttonRow}>
+          <View style={styles.buttonColumn}>
+              <TouchableOpacity 
+              style={styles.buttonQuestion}
+              onPress={() => navigation.navigate('Question')}
+              >
+              <Image 
+              source={require("../assets/images/checkboard.png")}
+              style={styles.imageStyle}
+              />
+                <Text style={styles.font}>
+                  Question
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity 
+              style={styles.buttonProfile}
+              onPress={() => navigation.navigate('Profile')}
+              >
+                <Text style={styles.font}>
+                  Profile
+                </Text>
+                <Feather name="user" size={30} color= '#ffefe2'/>
+              </TouchableOpacity>
+          </View>
         <TouchableOpacity 
-        style={styles.button}
-        onPress={() => navigation.navigate('Profile')}
-        >
-          <Text style={styles.font}>
-            Profile
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity 
-        style={styles.button}
-        onPress={() => navigation.navigate('Question')}
-        >
-          <Text style={styles.font}>
-            Question
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity 
-        style={styles.button}
+        style={styles.buttonResult}
         onPress={() => navigation.navigate('Result')}
         >
+          <Image 
+              source={require("../assets/images/bell.png")}
+              style={styles.bellimage}
+              />
           <Text style={styles.font}>
             Result
           </Text>
         </TouchableOpacity>
       </View>
+      </View>
+    </View>
   );
 }
 
@@ -117,6 +131,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     width: '100%',
     paddingHorizontal: 10,
+    paddingTop: 10,
   },
   menuContainerL: {
     flex: 1,
@@ -124,10 +139,36 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  buttonColumn: {
+    flex: 1,
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: '100%',
+  },
+  buttonRow: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 10,
+  },
   titleText: {
     color: '#ffefe2', 
     fontSize: 30,
     padding: 1
+  },
+  imageStyle: {
+    flex: 0,
+    height: 100,
+    width: 100,
+    resizeMode: 'contain',
+  },
+  bellimage: {
+    flex: 0,
+    height: 150,
+    width: 150,
+    resizeMode: 'contain',
   },
   menuButton: {
     flex: 0,
@@ -157,6 +198,37 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center'
   },
+  buttonQuestion: {
+    backgroundColor: '#8c522c',
+    width: '100%',
+    height: '55%',
+    padding: 5,
+    margin: 5,
+    borderRadius: 15,
+    justifyContent: 'flex-end',
+    alignItems: 'center'
+  },
+  buttonProfile: {
+    backgroundColor: '#996d48',
+    flexDirection: 'row',
+    width: '100%',
+    height: '25%',
+    padding: 5,
+    margin: 5,
+    borderRadius: 15,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  buttonResult: {
+    backgroundColor: '#bb7334',
+    width: '50%',
+    height: '85%',
+    padding: 5,
+    margin: 10,
+    borderRadius: 15,
+    justifyContent: 'flex-end',
+    alignItems: 'center'
+  },
   button: {
     borderColor: 'black',
     borderWidth: 3,
@@ -170,7 +242,6 @@ const styles = StyleSheet.create({
   font: {
     color: '#ffefe2', 
     fontSize: 25,
-    letterSpacing: 5,
     padding: 1
   }
 });
