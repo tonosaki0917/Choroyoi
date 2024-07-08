@@ -4,7 +4,7 @@ import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import { HomeStackList } from '@/navigation/HomeNav';
 import { NavigationProp } from '@react-navigation/native';
 import NewMenu from '@/components/NewMenu';
-import VerticalText from '../components/VerticalText';
+import { Entypo } from '@expo/vector-icons'
 
 import { useState, useEffect, useCallback } from 'react';
 
@@ -55,20 +55,15 @@ export default function HomeScreen() {
                 style={styles.buttonDark}
                 onPress={() => navigation.navigate('WriteMenu')}
                 >
-                <Text style={styles.font}>
-                  W
-                </Text>
+                <Entypo name="edit" size={24} color= '#ffefe2'/>
               </TouchableOpacity>
               <TouchableOpacity 
               style={styles.buttonLight}
               onPress={() => navigation.navigate('TakePhoto')}
               >
-                <Text style={styles.font}>
-                  T
-                </Text>
+                <Entypo name="camera" size={24} color= '#ffefe2'/>
               </TouchableOpacity>
         </View>
-          
           </View>
           <NewMenu
                 menuItems={menuItemsId}
