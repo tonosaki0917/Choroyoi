@@ -15,14 +15,14 @@ const NewMenu = ({ menuItems, radius, justifyContent, alignItems }: Props) => {
 
     const styles = StyleSheet.create({
         container: {
-            backgroundColor: "#F8DFC5",
+            flex: 0,
+            backgroundColor: "#f1e1d1",
             height: '60%',
             width: '100%',
             borderRadius: radius,
             justifyContent: justifyContent,
             alignItems: alignItems,
             flexDirection: 'row-reverse',
-            position: 'relative',
             padding: 10,
         },
         menuItemText: {
@@ -84,9 +84,6 @@ const NewMenu = ({ menuItems, radius, justifyContent, alignItems }: Props) => {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.titleText}>
-                <Text>お品がき </Text>
-            </Text>
             <View style={styles.menuItemText}>
                 {renderColumns()}
             </View>
