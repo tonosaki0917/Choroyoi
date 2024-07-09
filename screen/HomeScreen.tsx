@@ -22,7 +22,7 @@ export function updateMenuItems(newItems: string){
 }
 
 //idで管理
-let newMenuItemsId = [0,1,2,3,4]
+let newMenuItemsId:number[] = []
 //idリストの更新 <= WriteMenuScreen.tsx
 export function updateMenuItemsId(newIdList: number[]){
   newMenuItemsId = newIdList;

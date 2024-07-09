@@ -1,5 +1,5 @@
 import React from "react";
-import { View, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import TachableText from "./TachableText";
 
 interface Props {
@@ -48,10 +48,27 @@ const NewMenu = ({ menuItems, radius, justifyContent, alignItems }: Props) => {
             flex: 1,
             justifyContent: 'center',
             alignItems: 'center',
+        },
+        emptyMessage: {
+            fontSize: 18,
+            color: '#22110E',
+            textAlign: 'center',
         }
     });
 
     const renderColumns = () => {
+
+        //お品書きが設定されていない場合
+        if (menuItems.length === 0) {
+            return (
+                <View style={styles.columnContainer}>
+                    <Text style={styles.emptyMessage}>  
+                        右上のボタンからメニューを設定して下さい
+                    </Text>
+                </View>
+            );       
+        }
+
         const columnLength = Math.ceil(menuItems.length / numColumns);
         const columns = [];
 
