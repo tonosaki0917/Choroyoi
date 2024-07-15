@@ -16,7 +16,6 @@ import TachableText from '@/components/TachableText';
 
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/database';
-import { auth } from '@/App';
 
 type Navigation = NavigationProp<HomeStackList>;
 
