@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Text, View, Modal, Button, TouchableOpacity, Image, StyleSheet } from 'react-native';
 
+import Storage from 'react-native-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 //database functions
 //形式は変わる可能性あり
 import { getAlchol } from '@/database/todo';
@@ -15,6 +18,24 @@ interface DataType {
   info: string;
 }
 
+//ストレージの作成
+export const storage = new Storage({
+  // 最大容量
+  size: 1000,
+  // バックエンドにAsyncStorageを使う
+  storageBackend: AsyncStorage,
+  // キャッシュ期限(null=期限なし)
+  defaultExpires: null,
+  // メモリにキャッシュするかどうか
+  enableCache: true,
+})
+
+// 未注文なら初期値
+export var orderedMenuList = [JSON.stringify({
+  drink: "注文してない"
+})];
+const key = "test"
+
 const TachableText: React.FC<Props> = ({ id }) => {
   const [data, setData] = useState<DataType | null>(null);
   const [isDetailModalVisible, setDetailModalVisible] = useState(false);
@@ -28,11 +49,52 @@ const TachableText: React.FC<Props> = ({ id }) => {
     return <Text>Loading...</Text>;
   }
 
+  async function selectOrder(name:string){
+    console.log("korenisita!")
+    // 登録データの設定
+    const value = JSON.stringify({
+      drink : name,
+      date : new Date()
+    })
+  
+    // 一時格納用
+    var drink_data = new Array()
+  
+    // 前回までの登録データをの取り出し・再登録
+    await storage.load({ 
+      key : key
+    }).then(data =>{
+      for(let item of data){
+        console.log("item :::\t\t\t", item)
+        drink_data.push(item)
+      }
+    }).catch(err => {
+      console.log("err: ", err);
+    });
+  
+    drink_data.push(value);
+    console.log("pushed data: ", drink_data)
+  
+    storage.save({
+      key: key,
+      data: drink_data,
+    })
+  
+    orderedMenuList = await loadOrderedMenu()
+    console.log("押しました", orderedMenuList);
+  }
+
   return (
     <View style={styles.container}>
       <TouchableOpacity
-        onPress={() => {console.log("おしたね");setSelectModalVisible(true);}}
-        onLongPress={() => {console.log("長押ししたね");setDetailModalVisible(true)}}
+        onPress={() => {
+          console.log("おしたね");
+          setSelectModalVisible(true);
+        }}
+        onLongPress={() => {
+          console.log("長押ししたね");
+          setDetailModalVisible(true);
+        }}
       >
         <Text style={styles.text}>{data.name}</Text>
       </TouchableOpacity>
@@ -59,7 +121,11 @@ const TachableText: React.FC<Props> = ({ id }) => {
         <View style={styles.modalContainer}>
           <View style={styles.modalContent}>
             <Text style={styles.modalTitle}>これにする？</Text>
-            <Button title="これにする" onPress={() => {console.log("korenisita!") }} />
+            <Button title="これにする" onPress={ () => {
+              selectOrder(data.name)
+              alert(data.name+"を選びました！\n注文しましょう")
+              setSelectModalVisible(false)
+              } } />
             <Button title="Close" onPress={() => setSelectModalVisible(false)} />
           </View>
         </View>
@@ -67,6 +133,21 @@ const TachableText: React.FC<Props> = ({ id }) => {
     </View>
   );
 };
+
+export function loadOrderedMenu(){
+  return storage.load({
+    key: key
+  }).then(data =>{
+    for(let item of data){
+      item = JSON.parse(item)
+      //console.log("drink:::::::::::::::", item.drink)
+      //console.log("date::::::::::::::::", item.date)
+    }
+    return data;
+  }).catch(err =>{
+    return [JSON.stringify({drink: "注文してない"})]
+  })
+}
 
 const styles = StyleSheet.create({
   container: {
