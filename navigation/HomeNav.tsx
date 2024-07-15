@@ -18,6 +18,7 @@ export type HomeStackList = {
     Result: undefined;
     TakePhoto: undefined;
     WriteMenu: undefined;
+    Setting: undefined;
   };
 
 const Stack = createStackNavigator<HomeStackList>();
@@ -33,6 +34,7 @@ export function HomeNavigation() {
         <Stack.Screen name="Result" component={ResultScreen} options={{ headerShown: false }} />
         <Stack.Screen name="TakePhoto" component={TakePhotoScreen} options={{ headerShown: false }} />
         <Stack.Screen name="WriteMenu" component={WriteMenuScreen} options={{ headerShown: false }} />
+        <Stack.Screen name="Setting" component={Setting} options={{ headerShown: false }} />
       </Stack.Navigator>
     );
   }
