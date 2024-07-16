@@ -18,6 +18,7 @@ import { firebaseConfig } from '@/database/firebase';
 import { auth } from '@/App';
 
 import { FinalAnswers } from './QuestionSheetScreen';
+import { findBestThree } from '@/database/todo';
 
 type Navigation = NavigationProp<HomeStackList>;
 
@@ -145,6 +146,7 @@ export default function HomeScreen() {
                   <TouchableOpacity
                     style={styles.buttonLight}
                     onPress={async () => {
+                      findBestThree();
                       setlimit(limitNum);
                       setOrder(await loadOrderedMenu())
                     }}>
