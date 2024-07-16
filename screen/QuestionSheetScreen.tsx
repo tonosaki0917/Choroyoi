@@ -29,17 +29,17 @@ const questions = [
     text: 'フルーツの気分ですか？',
     image: require("../assets/images/fruits.png"),
     options: {
-      yes: 'q3',
-      no: 'q4'
+      yes: 'q4',
+      no: 'q5'
     }
   },
   {
     id: 'q3',
-    text: 'ここでアンケートを終了しますか？',
-    image: require("../assets/images/Login.jpg"),
+    text: 'フルーツの気分ですか？',
+    image: require("../assets/images/fruits.png"),
     options: {
-      yes: null, // 終了
-      no: 'q1'
+      yes: 'q6',
+      no: 'q7'
     }
   },
   {
@@ -47,8 +47,35 @@ const questions = [
     text: '甘いお酒がいいですか？',
     image: require("../assets/images/sweet.png"),
     options: {
-      yes: 'q3',
-      no: 'q1'
+      yes: null, // 終了
+      no: null, // 終了
+    }
+  },
+  {
+    id: 'q5',
+    text: '甘いお酒がいいですか？',
+    image: require("../assets/images/sweet.png"),
+    options: {
+      yes: null, // 終了
+      no: null, // 終了
+    }
+  },
+  {
+    id: 'q6',
+    text: '甘いお酒がいいですか？',
+    image: require("../assets/images/sweet.png"),
+    options: {
+      yes: null, // 終了
+      no: null, // 終了
+    }
+  },
+  {
+    id: 'q7',
+    text: '甘いお酒がいいですか？',
+    image: require("../assets/images/sweet.png"),
+    options: {
+      yes: null, // 終了
+      no: null, // 終了
     }
   },
 ];
@@ -108,7 +135,7 @@ export default function QuestionSheetScreen() {
       <View style={styles.paperContainer}>
         <TouchableOpacity 
             style={styles.closeButton} 
-            onPress={() => navigation.navigate("Question")}>
+            onPress={() => navigation.navigate("RouteHome")}>
             <Text style={styles.buttonText}>×</Text>
           </TouchableOpacity>
         <View style={styles.imageContainer}>

@@ -43,15 +43,15 @@ const results = [
       no: 'r1'
     }
   },
-  {
-    id: 'r4',
-    text: '気分が変わった？もう一度アンケートしてこよう',
-    image: require("../assets/images/sweet.png"),
-    options: {
-      yes: null,
-      no: 'r1'
-    }
-  },
+  // {
+  //   id: 'r4',
+  //   text: '気分が変わった？もう一度アンケートしてこよう',
+  //   image: require("../assets/images/sweet.png"),
+  //   options: {
+  //     yes: null,
+  //     no: 'r1'
+  //   }
+  // },
 ];
 
 const initialResults : Result[] = results.map((result: any) => ({
