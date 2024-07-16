@@ -83,6 +83,10 @@ export default function HomeScreen() {
   for(var item of Drinks){
     drinkList.push(JSON.parse(item).drink)
   }
+  var drinkedNum = 0;
+  if(drinkList[0] != "注文してない"){
+    drinkedNum = drinkList.length;
+  }
 
   return (
     <View style={styles.container}>
@@ -159,8 +163,7 @@ export default function HomeScreen() {
       <View>
         <Button title="飲み会終わり！" onPress={ async ()=> {
           writeOrderData(Drinks)
-          console.log()
-          alert(Drinks.length+"杯飲みました！\n"
+          alert(drinkedNum + "杯飲みました！\n"
                 + "↓↓↓Result↓↓↓\n" + drinkList);
           storage.remove({ key: "test" })
           setOrder(await loadOrderedMenu())
@@ -168,7 +171,7 @@ export default function HomeScreen() {
       </View>
       <View>
         <Text style={styles.font}>
-          {Drinks.length + "／n 杯目\n"}
+          {drinkedNum + "／n 杯目\n"}
           {drinkList}
         </Text>
       </View>

@@ -10,7 +10,7 @@ import { Entypo } from '@expo/vector-icons';
 import { getAuth, updateProfile } from "firebase/auth";
 import { auth } from '@/App';
 
-import { Table, Row} from 'react-native-reanimated-table';
+import { Table, Row } from 'react-native-reanimated-table';
 
 import TachableText from '@/components/TachableText';
 
@@ -52,7 +52,7 @@ export default function ProfileScreen() {
         console.log("data:::", data[x].date, " | ", data[x].drink)
       }
     })
-    if(hisList.length == 0) hisList = ["---"];
+    if(hisList.length == 0) hisList = [["---", "---"]];
     console.log(hisList)
     return hisList;
   };
