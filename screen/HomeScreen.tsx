@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView, FlatList } from 'react-native';
 import { Dimensions } from 'react-native';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import { HomeStackList } from '@/navigation/HomeNav';
@@ -95,6 +95,7 @@ export default function HomeScreen() {
   return (
     <ScrollView contentContainerStyle={styles.scrollContainer}>
       <View style={styles.container}>
+      <View style = {styles.allContainer}>
         <View style={styles.menuContainerL}>
           <View style={styles.titleContainer}>
             <Text style={styles.titleText}>
@@ -178,19 +179,18 @@ export default function HomeScreen() {
             </TouchableOpacity>
           </View>
         </View>
-        <View style={styles.buttonRow}>
-        <View>
-          
-        </View>
-        <View>
-          
-        </View>
-        </View>
         <View>
           <Text style={styles.font}>
             {drinkedNum + "／" + limitNum + "杯目\n"}
-            {drinkList}
           </Text>
+        </View>
+      <FlatList
+          data={drinkList}
+          keyExtractor={(item, index) => index.toString()}
+          renderItem={({ item }) => (
+            <Text style={styles.font}>{item}</Text>
+          )}
+        />
         </View>
       </View>
     </ScrollView>
@@ -205,6 +205,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#3d2c25',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  allContainer: {
+    flex: 1,
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
@@ -301,23 +307,6 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     justifyContent: 'flex-end',
     alignItems: 'center'
-  },
-  endButton: { // 追加: 飲み会終わりボタンのスタイル
-    backgroundColor: '#8c522c',
-    padding: 10,
-    borderRadius: 15,
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  button: {
-    borderColor: 'black',
-    borderWidth: 3,
-    width: 50,
-    height: 50,
-    borderRadius: 90,
-    backgroundColor: '#753e06',
-    padding: 0,
-    alignItems: 'center',
   },
   font: {
     color: '#ffefe2',
