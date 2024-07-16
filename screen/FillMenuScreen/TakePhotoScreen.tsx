@@ -14,14 +14,7 @@ export default function TakePhotoScreen() {
     <View style={styles.container}>
       <View style={styles.overlay}>
       <Gpt_ocr />
-      <TouchableOpacity 
-        style={styles.button}
-        onPress={() => navigation.navigate('RouteHome')}
-        >
-          <Text style={styles.font}>
-            Return Home
-          </Text>
-        </TouchableOpacity>
+
       </View>
     </View>
   );
