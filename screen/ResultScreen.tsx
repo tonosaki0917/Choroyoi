@@ -5,6 +5,8 @@ import { HomeStackList } from '@/navigation/HomeNav';
 import { NavigationProp } from '@react-navigation/native';
 import { ProgressBar } from 'react-native-paper';
 
+import { storage, orderedMenuList, key, loadOrderedMenu } from '@/components/TachableText';
+
 type Navigation = NavigationProp<HomeStackList>;
 
 type Result = {
@@ -12,7 +14,8 @@ type Result = {
   ans: 'yes' | 'no' | null;
 };
 
-type proposeDataType = {
+//必要なデータタイプ
+export type proposeDataType = {
   id: number;
   name: string;
   type: string;
@@ -20,7 +23,7 @@ type proposeDataType = {
 }
 
 //提案データ(仮)
-let proposeData: proposeDataType[] = [
+export let proposeData: proposeDataType[] = [
   {
     id: 1,
     name: 'ビール',
@@ -55,6 +58,7 @@ const selectImage = (type: string) => {
 } 
 
 //提案データの更新
+//提案アルゴリズム完了時に参照してほしい！！
 export const setProposeData = (newProposeData: proposeDataType[]) => {
   proposeData = newProposeData
   results = [
@@ -155,20 +159,50 @@ export default function ResultScreen() {
 
   const { width, height } = Dimensions.get('window');
 
+  //TachableTextからのコピー
+  async function selectOrder(name:string){
+    console.log("korenisita!")
+    // 登録データの設定
+    const value = JSON.stringify({
+      drink : name,
+      date : new Date()
+    })
+  
+    // 一時格納用
+    var drink_data = new Array()
+  
+    // 前回までの登録データをの取り出し・再登録
+    await storage.load({ 
+      key : key
+    }).then(data =>{
+      for(let item of data){
+        //console.log("item :::\t\t\t", item)
+        drink_data.push(item)
+      }
+    }).catch(err => {
+      console.log("err: ", err);
+    });
+  
+    drink_data.push(value);
+    console.log("pushed data: ", drink_data)
+  
+    storage.save({
+      key: key,
+      data: drink_data,
+    })
+  
+    //このエラーは無視しています（動きはする）
+    orderedMenuList = await loadOrderedMenu()
+    console.log("押しました", orderedMenuList);
+  }
+
+  //result id ('r1'など)から名前を取得
+  const getName = (selectId: string) => {
+    const result = results.find(item => item.id === selectId);
+    return result ? result.text : undefined;
+  }
+
   const handleAnswer = (answer: 'yes' | 'no') => {
-
-    const getUpdateAnswers = (prevAnswers: Result[]) => {
-      return prevAnswers.map(ans => {
-        if (ans.id === currentResultId) {
-          return { ...ans, ans: answer };
-        } else {
-          return ans;
-        }
-      });
-    };
-
-    const updatedAnswers = getUpdateAnswers(answers);
-    setAnswers(updatedAnswers);
 
     const currentQuestion = results.find(a => a.id === currentResultId);
     const nextResultId = currentQuestion?.options[answer];
@@ -179,8 +213,16 @@ export default function ResultScreen() {
       // アンケート終了処理
       console.log('選択終了');
       navigation.navigate("RouteHome");
-      console.log(updatedAnswers);
-      console.log(results)
+
+      const selectName = getName(currentResultId)
+      
+      console.log(currentResultId);
+      console.log(selectName)
+
+      //名前がundefinedでなければＯＫ
+      if(selectName){
+        selectOrder(selectName)
+      }
     }
   };
 

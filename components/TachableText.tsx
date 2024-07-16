@@ -34,7 +34,7 @@ export const storage = new Storage({
 export var orderedMenuList = [JSON.stringify({
   drink: "注文してない"
 })];
-const key = "test"
+export const key = "test"
 
 const TachableText: React.FC<Props> = ({ id }) => {
   const [data, setData] = useState<DataType | null>(null);
