@@ -12,12 +12,101 @@ type Result = {
   ans: 'yes' | 'no' | null;
 };
 
-const results = [
+type proposeDataType = {
+  id: number;
+  name: string;
+  type: string;
+  information: string;
+}
+
+//提案データ(仮)
+let proposeData: proposeDataType[] = [
+  {
+    id: 1,
+    name: 'ビール',
+    type: 'Beer',
+    information: '飲み会の定番　苦めで弱炭酸　のどごしを楽しむお酒'
+  },
+  {
+    id: 10,
+    name: 'グレープフルーツサワー',
+    type: 'Sour',
+    information: 'グレープフルーツ＋ウォッカ＋炭酸　甘味控えめで食事に合う　ペースアップに注意'
+  },
+  {
+    id: 11,
+    name: '焼酎',
+    type: 'Liqueur',
+    information: '蒸留酒　ロックやソーダ割りで注文できる　度数は高め'
+  },
+]
+
+//提案データのタイプから画像データディレクトリの選択
+const selectImage = (type: string) => {
+  if (type === 'beer'){
+    return require("../assets/images/beer.png")
+  }
+  else if (type === 'sour'){
+    return require("../assets/images/grapefruit.png")
+  }
+  else{
+    return require("../assets/images/syoutyu.png")
+  }
+} 
+
+//提案データの更新
+export const setProposeData = (newProposeData: proposeDataType[]) => {
+  proposeData = newProposeData
+  results = [
+    {
+      id: 'r1',
+      text: newProposeData[0].name,
+      image: selectImage(newProposeData[0].type),
+      info: newProposeData[0].information,
+      options: {
+        yes: null, //終了
+        no: 'r2'
+      }
+    },
+    {
+      id: 'r2',
+      text: newProposeData[1].name,
+      image: selectImage(newProposeData[1].type),
+      info: newProposeData[1].information,
+      options: {
+        yes: null, //終了
+        no: 'r3'
+      }
+    },
+    {
+      id: 'r3',
+      text: newProposeData[2].name,
+      image: selectImage(newProposeData[2].type),
+      info: newProposeData[2].information,
+      options: {
+        yes: null, // 終了
+        no: 'r1'
+      }
+    },
+    {
+      id: 'r4',
+      text: '気分が変わった？もう一度アンケートしてこよう',
+      image: require("../assets/images/sweet.png"),
+      options: {
+        yes: null,
+        no: 'r1'
+      }
+    },
+  ]
+}
+
+//結果を表示するためのもの
+let results = [
   {
     id: 'r1',
-    text: 'ビール',
+    text: 'ーーー',
     image: require("../assets/images/beer.png"),
-    info: '飲み会の定番　苦めで弱炭酸　のどごしを楽しむお酒',
+    info: 'ーーーーー',
     options: {
       yes: null, //終了
       no: 'r2'
@@ -25,9 +114,9 @@ const results = [
   },
   {
     id: 'r2',
-    text: 'グレープフルーツサワー',
+    text: 'ーーー',
     image: require("../assets/images/grapefruit.png"),
-    info: 'グレープフルーツ＋ウォッカ＋炭酸　甘味控えめで食事に合う　ペースアップに注意',
+    info: 'ーーーーー',
     options: {
       yes: null, //終了
       no: 'r3'
@@ -35,9 +124,9 @@ const results = [
   },
   {
     id: 'r3',
-    text: '焼酎',
+    text: 'ーーー',
     image: require("../assets/images/syoutyu.png"),
-    info: '蒸留酒　ロックやソーダ割りで注文できる　度数は高め',
+    info: 'ーーーーー',
     options: {
       yes: null, // 終了
       no: 'r1'
@@ -88,9 +177,10 @@ export default function ResultScreen() {
       setCurrentResultId(nextResultId);
     } else {
       // アンケート終了処理
-      console.log('アンケート終了');
+      console.log('選択終了');
       navigation.navigate("RouteHome");
       console.log(updatedAnswers);
+      console.log(results)
     }
   };
 
