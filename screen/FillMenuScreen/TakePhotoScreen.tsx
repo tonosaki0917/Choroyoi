@@ -3,6 +3,7 @@ import { Dimensions } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { HomeStackList } from '@/navigation/HomeNav';
 import { NavigationProp } from '@react-navigation/native';
+import Gpt_ocr from '../../components/Gpt_ocr'
 
 type Navigation = NavigationProp<HomeStackList>;
 
@@ -12,6 +13,7 @@ export default function TakePhotoScreen() {
   return (
     <View style={styles.container}>
       <View style={styles.overlay}>
+      <Gpt_ocr />
       <TouchableOpacity 
         style={styles.button}
         onPress={() => navigation.navigate('RouteHome')}
