@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { Platform, StyleSheet, TextInput, Button, Image, Dimensions } from 'react-native';
+import { Platform, StyleSheet, TextInput, Button, Image, Dimensions, Alert } from 'react-native';
 import { Text, View } from 'react-native';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 
@@ -27,6 +27,7 @@ export default function Login() {
       navigation.navigate('Home', {screen: 'RouteHome'});
     } catch (error) {
       console.log(error);
+      Alert.alert("エラー", "メールアドレスかパスワードが正しくありません");
     }     
   };
 
@@ -39,7 +40,7 @@ export default function Login() {
   return (
     <View style={styles.container}>
       <Image source={require('../assets/images/Login.jpg')} style={{width: width, height: height, position: 'absolute'}} />
-      <Text style={styles.title}>Login</Text>
+      <Text style={styles.title}>Choroyoi</Text>
       <TextInput
         style={styles.input}
         placeholder="メールアドレス"
