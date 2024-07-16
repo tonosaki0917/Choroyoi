@@ -20,9 +20,9 @@ const NewMenu = ({ menuItems, radius, justifyContent, alignItems }: Props) => {
 
     const styles = StyleSheet.create({
         container: {
-            flex: 0,
+            flex: 1,
             backgroundColor: "#f1e1d1",
-            height: '50%',
+            height: 280,
             width: '100%',
             borderRadius: radius,
             justifyContent: justifyContent,
