@@ -15,6 +15,8 @@ import 'firebase/compat/database';
 import { firebaseConfig } from '@/database/firebase';
 import { auth } from '@/App';
 
+import { FinalAnswers } from './QuestionSheetScreen';
+
 type Navigation = NavigationProp<HomeStackList>;
 
 // 今は使ってない
@@ -164,11 +166,11 @@ export default function HomeScreen() {
               </TouchableOpacity>
               </View>
             </View>
-            <TouchableOpacity
-              style={styles.buttonResult}
-              onPress={() => navigation.navigate('Result')}
-            >
-              <Image
+          <TouchableOpacity 
+          style={styles.buttonResult}
+          onPress={() => {navigation.navigate('Result'); console.log(FinalAnswers)}}
+          >
+            <Image 
                 source={require("../assets/images/bell.png")}
                 style={styles.bellimage}
               />

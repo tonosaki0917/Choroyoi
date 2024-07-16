@@ -59,6 +59,9 @@ const initialAnswers : Answer[] = questions.map((question: any) => ({
 }))
 //[{id:'q1', ans:null}]
 
+//ここを参照すればよい（要検証）
+export let FinalAnswers : Answer[] = initialAnswers
+
 export default function QuestionSheetScreen() {
   const navigation = useNavigation<Navigation>();
   const [currentQuestionId, setCurrentQuestionId] = useState('q1');
@@ -91,6 +94,7 @@ export default function QuestionSheetScreen() {
       console.log('アンケート終了');
       navigation.navigate("RouteHome");
       console.log(updatedAnswers);
+      FinalAnswers = updatedAnswers
     }
   };
 
