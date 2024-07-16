@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Image, Button, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, Image, Button, TouchableOpacity, ScrollView } from 'react-native';
 import { Dimensions } from 'react-native';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import { HomeStackList } from '@/navigation/HomeNav';
@@ -93,6 +93,7 @@ export default function HomeScreen() {
   }
 
   return (
+    <ScrollView contentContainerStyle={styles.scrollContainer}>
     <View style={styles.container}>
       <View style={styles.menuContainerL}>
         <View style={styles.titleContainer}>
@@ -125,7 +126,7 @@ export default function HomeScreen() {
             <View style={styles.buttonColumn}>
                 <TouchableOpacity 
                 style={styles.buttonQuestion}
-                onPress={() => navigation.navigate('Question')}
+                onPress={() => navigation.navigate('QuestionSheet')}
                 >
                 <Image 
                 source={require("../assets/images/checkboard.png")}
@@ -180,11 +181,15 @@ export default function HomeScreen() {
         </Text>
       </View>
     </View>
+    </ScrollView>
   );
 }
 
 
 const styles = StyleSheet.create({
+  scrollContainer: {
+    flexGrow: 1,
+  },
   container: {
     flex: 1,
     backgroundColor: '#3d2c25',
@@ -193,7 +198,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   titleContainer: {
-    flex: 0,
+    flex: 1,
     flexDirection: 'row',
     alignItems: 'flex-end',
     justifyContent: 'space-between',

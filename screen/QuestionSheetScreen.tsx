@@ -108,7 +108,7 @@ export default function QuestionSheetScreen() {
       <View style={styles.paperContainer}>
         <TouchableOpacity 
             style={styles.closeButton} 
-            onPress={() => navigation.navigate("Question")}>
+            onPress={() => navigation.navigate("RouteHome")}>
             <Text style={styles.buttonText}>×</Text>
           </TouchableOpacity>
         <View style={styles.imageContainer}>
