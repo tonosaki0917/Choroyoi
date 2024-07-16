@@ -29,17 +29,17 @@ const questions = [
     text: 'フルーツの気分ですか？',
     image: require("../assets/images/fruits.png"),
     options: {
-      yes: 'q3',
-      no: 'q4'
+      yes: 'q4',
+      no: 'q4' //炭酸の気分であるときはQ4へと進む
     }
   },
   {
     id: 'q3',
-    text: 'ここでアンケートを終了しますか？',
-    image: require("../assets/images/Login.jpg"),
+    text: 'フルーツの気分ですか？',
+    image: require("../assets/images/fruits.png"),
     options: {
-      yes: null, // 終了
-      no: 'q1'
+      yes: 'q4', 
+      no: null // 炭酸の気分でないときは終了
     }
   },
   {
@@ -47,8 +47,8 @@ const questions = [
     text: '甘いお酒がいいですか？',
     image: require("../assets/images/sweet.png"),
     options: {
-      yes: 'q3',
-      no: 'q1'
+      yes: null,
+      no: null
     }
   },
 ];
