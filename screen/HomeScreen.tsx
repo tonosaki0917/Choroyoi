@@ -8,12 +8,16 @@ import { Entypo } from '@expo/vector-icons';
 import Feather from '@expo/vector-icons/Feather';
 
 import { useState, useCallback } from 'react';
-import { storage, orderedMenuList, loadOrderedMenu } from '@/components/TachableText';
+import { storage, orderedMenuList, loadOrderedMenu} from '@/components/TachableText';
+import { limitNum } from './ProfileScreen';
+
 
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/database';
 import { firebaseConfig } from '@/database/firebase';
 import { auth } from '@/App';
+
+import { FinalAnswers } from './QuestionSheetScreen';
 
 type Navigation = NavigationProp<HomeStackList>;
 
@@ -65,7 +69,8 @@ export default function HomeScreen() {
   const navigation = useNavigation<Navigation>();
   const { width, height } = Dimensions.get('window');
   const [menuItems, setMenuItems] = useState(newMenuItems);
-  const [Drinks, setOrder] = useState(orderedMenuList)
+  const [Drinks, setOrder] = useState(orderedMenuList);
+  const [limit, setlimit] = useState(limitNum);
 
   // idで管理
   const [menuItemsId, setMenuItemsId] = useState(newMenuItemsId);
@@ -84,10 +89,9 @@ export default function HomeScreen() {
     drinkList.push(JSON.parse(item).drink)
   }
   var drinkedNum = 0;
-  var limitNum = 4;
-  if (drinkList[0] != "注文してない") {
+  if(drinkList[0] != "注文してない"){
     drinkedNum = drinkList.length;
-    if (drinkedNum >= limitNum) {
+    if(drinkedNum >= limit){
       alert("ちょっと飲みすぎじゃないですか？")
     }
   }
@@ -165,11 +169,11 @@ export default function HomeScreen() {
               </TouchableOpacity>
               </View>
             </View>
-            <TouchableOpacity
-              style={styles.buttonResult}
-              onPress={() => navigation.navigate('Result')}
-            >
-              <Image
+          <TouchableOpacity 
+          style={styles.buttonResult}
+          onPress={() => {navigation.navigate('Result'); console.log(FinalAnswers)}}
+          >
+            <Image 
                 source={require("../assets/images/bell.png")}
                 style={styles.bellimage}
               />
@@ -191,7 +195,6 @@ export default function HomeScreen() {
             <Text style={styles.font}>{item}</Text>
           )}
         />
-        
         </View>
       </View>
     </ScrollView>
