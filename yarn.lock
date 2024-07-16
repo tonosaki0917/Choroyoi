@@ -2982,6 +2982,15 @@ available-typed-arrays@^1.0.7:
   dependencies:
     possible-typed-array-names "^1.0.0"
 
+axios@^1.7.2:
+  version "1.7.2"
+  resolved "https://registry.yarnpkg.com/axios/-/axios-1.7.2.tgz#b625db8a7051fbea61c35a3cbb3a1daa7b9c7621"
+  integrity sha512-2A8QhOMrbomlDuiLeK9XibIBzuHeRcqqNOHp0Cyp5EoJ1IFDh+XZH3A6BkXtv0K4gFGCI0Y4BM7B1wOEi0Rmgw==
+  dependencies:
+    follow-redirects "^1.15.6"
+    form-data "^4.0.0"
+    proxy-from-env "^1.1.0"
+
 babel-core@^7.0.0-bridge.0:
   version "7.0.0-bridge.0"
   resolved "https://registry.npmjs.org/babel-core/-/babel-core-7.0.0-bridge.0.tgz"
@@ -4292,6 +4301,18 @@ expo-font@~12.0.6:
   dependencies:
     fontfaceobserver "^2.1.0"
 
+expo-image-loader@~4.7.0:
+  version "4.7.0"
+  resolved "https://registry.yarnpkg.com/expo-image-loader/-/expo-image-loader-4.7.0.tgz#d403106822de80bda12d644c82b7a3b7983c0f0b"
+  integrity sha512-cx+MxxsAMGl9AiWnQUzrkJMJH4eNOGlu7XkLGnAXSJrRoIiciGaKqzeaD326IyCTV+Z1fXvIliSgNW+DscvD8g==
+
+expo-image-picker@^15.0.7:
+  version "15.0.7"
+  resolved "https://registry.yarnpkg.com/expo-image-picker/-/expo-image-picker-15.0.7.tgz#eb25abfdb03cb940f0418add3d9814439526b025"
+  integrity sha512-u8qiPZNfDb+ap6PJ8pq2iTO7JKX+ikAUQ0K0c7gXGliKLxoXgDdDmXxz9/6QdICTshJBJlBvI0MwY5NWu7A/uw==
+  dependencies:
+    expo-image-loader "~4.7.0"
+
 expo-keep-awake@~13.0.2:
   version "13.0.2"
   resolved "https://registry.npmjs.org/expo-keep-awake/-/expo-keep-awake-13.0.2.tgz"
@@ -4304,6 +4325,11 @@ expo-linking@~6.3.1:
   dependencies:
     expo-constants "~16.0.0"
     invariant "^2.2.4"
+
+expo-media-library@^16.0.4:
+  version "16.0.4"
+  resolved "https://registry.yarnpkg.com/expo-media-library/-/expo-media-library-16.0.4.tgz#d6b264a201861a2eb055b8c181368d2e7f525ca4"
+  integrity sha512-nX9iN8+XAoERDVGPpDdUbhFwvfYdBpkgTAxwDOYL7heASYCOdxfqQtXy/jv1+QZpj0epaR6Owq/LUn1lVP3ykg==
 
 expo-modules-autolinking@1.11.1:
   version "1.11.1"
@@ -4595,6 +4621,11 @@ flow-parser@0.*:
   version "0.237.2"
   resolved "https://registry.npmjs.org/flow-parser/-/flow-parser-0.237.2.tgz"
   integrity sha512-mvI/kdfr3l1waaPbThPA8dJa77nHXrfZIun+SWvFwSwDjmeByU7mGJGRmv1+7guU6ccyLV8e1lqZA1lD4iMGnQ==
+
+follow-redirects@^1.15.6:
+  version "1.15.6"
+  resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.15.6.tgz#7f815c0cda4249c74ff09e95ef97c23b5fd0399b"
+  integrity sha512-wWN62YITEaOpSK584EZXJafH1AGpO8RVgElfkuXbTOrPX4fIfOyEpW/CsiNd8JdYrAoOvafRTOEnvsO++qCqFA==
 
 fontfaceobserver@^2.1.0:
   version "2.3.0"
@@ -7353,6 +7384,11 @@ protobufjs@^7.2.5:
     "@protobufjs/utf8" "^1.1.0"
     "@types/node" ">=13.7.0"
     long "^5.0.0"
+
+proxy-from-env@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/proxy-from-env/-/proxy-from-env-1.1.0.tgz#e102f16ca355424865755d2c9e8ea4f24d58c3e2"
+  integrity sha512-D+zkORCbA9f1tdWRK0RaCR3GPv50cMxcrz4X8k5LTSUD1Dkw47mKJEZQNunItRTkWwgtaUSo1RVFRIG9ZXiFYg==
 
 psl@^1.1.33:
   version "1.9.0"

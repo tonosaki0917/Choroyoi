@@ -4,9 +4,9 @@ import * as MediaLibrary from 'expo-media-library';
 import * as ImagePicker from 'expo-image-picker';
 import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
+import { CHATGPT_API_KEY } from '@/database/firebase';
 
 
-const CHATGPT_API_KEY = "";
 
 const Gpt_ocr = () => {
     const [hasCameraPermission, setHasCameraPermission] = useState(false);
@@ -99,7 +99,7 @@ const Gpt_ocr = () => {
                 }
             );
             console.log("ChatGPT API response:", response.data); 
-            const extracted_drinks_list = response.data.choices[0].message.content.split(',').map(drink => drink.trim());
+            const extracted_drinks_list = response.data.choices[0].message.content.split(',').map((drink:string) => drink.trim());
             console.log("Extracted drinks list:", extracted_drinks_list);
             return extracted_drinks_list;
         } catch (error) {

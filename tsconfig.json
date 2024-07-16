@@ -7,15 +7,13 @@
         "./*"
       ]
     },
-  "typeRoots": [
+    "typeRoots": [
       "./node_modules/@types",
-      "./types"  // カスタム型定義がある場合
+      "./types"
     ]
   },
   "include": [
     "**/*.ts",
-    "**/*.tsx",
-    ".expo/types/**/*.ts",
-    "expo-env.d.ts"
+    "**/*.tsx"
   ]
 }

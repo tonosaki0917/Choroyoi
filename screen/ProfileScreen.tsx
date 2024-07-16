@@ -20,7 +20,7 @@ import InputNumberStyles from 'rmc-input-number/lib/styles';
 type Navigation = NavigationProp<HomeStackList>;
 
 var InputNumber = require('rmc-input-number');
-export let limitNum = 0;
+export let limitNum = 6;
 
 export default function ProfileScreen() {
 
