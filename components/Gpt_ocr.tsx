@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, Button, Alert, SafeAreaView,ActivityIndicator, Modal } from 'react-native';
+import { StyleSheet, Text, View, Button, Alert, SafeAreaView,ActivityIndicator, Modal, TouchableOpacity } from 'react-native';
 import * as MediaLibrary from 'expo-media-library';
 import * as ImagePicker from 'expo-image-picker';
 import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
+import { Entypo } from '@expo/vector-icons';
 import { CHATGPT_API_KEY } from '@/database/firebase';
 
 
@@ -112,7 +113,11 @@ const Gpt_ocr = () => {
         <SafeAreaView style={styles.container}>
             <Text style={styles.instruction}>メニューの写真を撮ってください</Text>
             <View style={styles.buttonContainer}>
-                <Button title="写真を撮る" onPress={takePictureAndProcess} />
+                <TouchableOpacity
+                style={styles.buttonDark}
+                onPress={takePictureAndProcess} >
+                    <Entypo name="camera" size={24} color='#ffefe2' />
+                </TouchableOpacity>
             </View>
             {extractedDrinks.length > 0 && (
                 <View style={styles.resultContainer}>
@@ -131,18 +136,30 @@ const Gpt_ocr = () => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#F3E2CF',
         alignItems: 'center',
         justifyContent: 'center',
     },
     instruction: {
-        fontSize: 18,
+        color: '#22110E',
+        fontSize: 24,
         marginBottom: 20,
         textAlign: 'center',
     },
     buttonContainer: {
         width: '80%',
-    },resultContainer: {
+
+    },
+    buttonDark: {
+        backgroundColor: '#8c522c',
+        width: 50,
+        height: 50,
+        padding: 10,
+        margin: 5,
+        borderRadius: 15,
+        justifyContent: 'center',
+        alignItems: 'center'
+      },
+    resultContainer: {
         marginTop: 20,
         padding: 10,
         backgroundColor: '#fff',

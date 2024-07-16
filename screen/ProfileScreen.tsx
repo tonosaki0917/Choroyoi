@@ -90,11 +90,13 @@ export default function ProfileScreen() {
       </View>
       
       <Text style={styles.message}>飲酒履歴</Text>
-      <View style={styles.container}>
+      <View style={styles.rowContainer}>
         <ScrollView horizontal={true}>
           <View>
-            <Table borderStyle={{borderWidth: 1, borderColor: '#C1C0B9'}}>
-              <Row data={["date", "menu"]} style={styles.head} textStyle={styles.text}/>
+            <Table 
+            borderStyle={{borderWidth: 1, borderColor: '#C1C0B9'}}
+            >
+              <Row data={["date", "menu"]} style={styles.head} textStyle={styles.headText}/>
             </Table>
             <ScrollView style={styles.dataWrapper}>
               <Table borderStyle={{borderWidth: 1, borderColor: '#C1C0B9'}}>
@@ -132,14 +134,20 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  rowContainer: {
+    flex: 1,
+    height: 300,
+    backgroundColor: '#ffefe2',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   profileContainer: {
     flex: 2,
-    paddingTop: 80,
+    paddingTop: 40,
     alignItems: 'flex-start',
     justifyContent: 'flex-start',
     width: '90%', 
     paddingHorizontal: 30,
-    padding: 10
   },
   message: {
     fontSize: 25,
@@ -189,16 +197,22 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center'
   },
+  headText: {
+    color: '#ffefe2',
+    margin: 6,
+    textAlign: 'center'
+  },
   text: {
     margin: 6,
     textAlign: 'center'
   },
   head: { 
     height: 40, 
-    backgroundColor: '#f1f8ff' 
+    backgroundColor: '#22110E' 
   },
   row: { 
-    height: 40
+    height: 40,
+    width: 300
   },
   dataWrapper: { 
     marginTop: -1 

@@ -5,6 +5,8 @@ import { HomeStackList } from '@/navigation/HomeNav';
 import { NavigationProp } from '@react-navigation/native';
 import { ProgressBar } from 'react-native-paper';
 
+import { storage, orderedMenuList, key, loadOrderedMenu } from '@/components/TachableText';
+
 type Navigation = NavigationProp<HomeStackList>;
 
 type Result = {
@@ -12,12 +14,103 @@ type Result = {
   ans: 'yes' | 'no' | null;
 };
 
-const results = [
+//必要なデータタイプ
+export type proposeDataType = {
+  id: number;
+  name: string;
+  type: string;
+  information: string;
+}
+
+//提案データ(仮)
+export let proposeData: proposeDataType[] = [
+  {
+    id: 1,
+    name: 'ビール',
+    type: 'Beer',
+    information: '飲み会の定番　苦めで弱炭酸　のどごしを楽しむお酒'
+  },
+  {
+    id: 10,
+    name: 'グレープフルーツサワー',
+    type: 'Sour',
+    information: 'グレープフルーツ＋ウォッカ＋炭酸　甘味控えめで食事に合う　ペースアップに注意'
+  },
+  {
+    id: 11,
+    name: '焼酎',
+    type: 'Liqueur',
+    information: '蒸留酒　ロックやソーダ割りで注文できる　度数は高め'
+  },
+]
+
+//提案データのタイプから画像データディレクトリの選択
+const selectImage = (type: string) => {
+  if (type === 'beer'){
+    return require("../assets/images/beer.png")
+  }
+  else if (type === 'sour'){
+    return require("../assets/images/grapefruit.png")
+  }
+  else{
+    return require("../assets/images/syoutyu.png")
+  }
+} 
+
+//提案データの更新
+//提案アルゴリズム完了時に参照してほしい！！
+export const setProposeData = (newProposeData: proposeDataType[]) => {
+  proposeData = newProposeData
+  results = [
+    {
+      id: 'r1',
+      text: newProposeData[0].name,
+      image: selectImage(newProposeData[0].type),
+      info: newProposeData[0].information,
+      options: {
+        yes: null, //終了
+        no: 'r2'
+      }
+    },
+    {
+      id: 'r2',
+      text: newProposeData[1].name,
+      image: selectImage(newProposeData[1].type),
+      info: newProposeData[1].information,
+      options: {
+        yes: null, //終了
+        no: 'r3'
+      }
+    },
+    {
+      id: 'r3',
+      text: newProposeData[2].name,
+      image: selectImage(newProposeData[2].type),
+      info: newProposeData[2].information,
+      options: {
+        yes: null, // 終了
+        no: 'r1'
+      }
+    },
+    {
+      id: 'r4',
+      text: '気分が変わった？もう一度アンケートしてこよう',
+      image: require("../assets/images/sweet.png"),
+      options: {
+        yes: null,
+        no: 'r1'
+      }
+    },
+  ]
+}
+
+//結果を表示するためのもの
+let results = [
   {
     id: 'r1',
-    text: 'ビール',
+    text: 'ーーー',
     image: require("../assets/images/beer.png"),
-    info: '飲み会の定番　苦めで弱炭酸　のどごしを楽しむお酒',
+    info: 'ーーーーー',
     options: {
       yes: null, //終了
       no: 'r2'
@@ -25,9 +118,9 @@ const results = [
   },
   {
     id: 'r2',
-    text: 'グレープフルーツサワー',
+    text: 'ーーー',
     image: require("../assets/images/grapefruit.png"),
-    info: 'グレープフルーツ＋ウォッカ＋炭酸　甘味控えめで食事に合う　ペースアップに注意',
+    info: 'ーーーーー',
     options: {
       yes: null, //終了
       no: 'r3'
@@ -35,9 +128,9 @@ const results = [
   },
   {
     id: 'r3',
-    text: '焼酎',
+    text: 'ーーー',
     image: require("../assets/images/syoutyu.png"),
-    info: '蒸留酒　ロックやソーダ割りで注文できる　度数は高め',
+    info: 'ーーーーー',
     options: {
       yes: null, // 終了
       no: 'r1'
@@ -66,20 +159,50 @@ export default function ResultScreen() {
 
   const { width, height } = Dimensions.get('window');
 
+  //TachableTextからのコピー
+  async function selectOrder(name:string){
+    console.log("korenisita!")
+    // 登録データの設定
+    const value = JSON.stringify({
+      drink : name,
+      date : new Date()
+    })
+  
+    // 一時格納用
+    var drink_data = new Array()
+  
+    // 前回までの登録データをの取り出し・再登録
+    await storage.load({ 
+      key : key
+    }).then(data =>{
+      for(let item of data){
+        //console.log("item :::\t\t\t", item)
+        drink_data.push(item)
+      }
+    }).catch(err => {
+      console.log("err: ", err);
+    });
+  
+    drink_data.push(value);
+    console.log("pushed data: ", drink_data)
+  
+    storage.save({
+      key: key,
+      data: drink_data,
+    })
+  
+    //このエラーは無視しています（動きはする）
+    orderedMenuList = await loadOrderedMenu()
+    console.log("押しました", orderedMenuList);
+  }
+
+  //result id ('r1'など)から名前を取得
+  const getName = (selectId: string) => {
+    const result = results.find(item => item.id === selectId);
+    return result ? result.text : undefined;
+  }
+
   const handleAnswer = (answer: 'yes' | 'no') => {
-
-    const getUpdateAnswers = (prevAnswers: Result[]) => {
-      return prevAnswers.map(ans => {
-        if (ans.id === currentResultId) {
-          return { ...ans, ans: answer };
-        } else {
-          return ans;
-        }
-      });
-    };
-
-    const updatedAnswers = getUpdateAnswers(answers);
-    setAnswers(updatedAnswers);
 
     const currentQuestion = results.find(a => a.id === currentResultId);
     const nextResultId = currentQuestion?.options[answer];
@@ -88,9 +211,18 @@ export default function ResultScreen() {
       setCurrentResultId(nextResultId);
     } else {
       // アンケート終了処理
-      console.log('アンケート終了');
+      console.log('選択終了');
       navigation.navigate("RouteHome");
-      console.log(updatedAnswers);
+
+      const selectName = getName(currentResultId)
+      
+      console.log(currentResultId);
+      console.log(selectName)
+
+      //名前がundefinedでなければＯＫ
+      if(selectName){
+        selectOrder(selectName)
+      }
     }
   };
 
