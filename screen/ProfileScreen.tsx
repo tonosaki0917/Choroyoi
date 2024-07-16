@@ -12,12 +12,15 @@ import { auth } from '@/App';
 
 import { Table, Row } from 'react-native-reanimated-table';
 
-import TachableText from '@/components/TachableText';
-
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/database';
 
+import InputNumberStyles from 'rmc-input-number/lib/styles';
+
 type Navigation = NavigationProp<HomeStackList>;
+
+var InputNumber = require('rmc-input-number');
+export let limitNum = 0;
 
 export default function ProfileScreen() {
 
@@ -72,11 +75,21 @@ export default function ProfileScreen() {
         <Text style={styles.email}>{currentEmail}</Text>
 
         <Text style={styles.message}>アレルギー情報？</Text>
-
-        <Text style={styles.message}>今までの履歴？</Text>
-
-
+        
+        <Text style={styles.message}>上限設定</Text>
+        <InputNumber
+          defaultValue={limitNum}
+          min={0}
+          max={300}
+          onChange={(value: number) => {
+            limitNum = value;
+            console.log(limitNum);
+          }}
+          styles={InputNumberStyles}
+        />
       </View>
+      
+      <Text style={styles.message}>飲酒履歴</Text>
       <View style={styles.container}>
         <ScrollView horizontal={true}>
           <View>
