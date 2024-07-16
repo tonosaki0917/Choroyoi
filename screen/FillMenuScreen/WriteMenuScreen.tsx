@@ -4,6 +4,7 @@ import { Dimensions, FlatList } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { HomeStackList } from '@/navigation/HomeNav';
 import { NavigationProp } from '@react-navigation/native';
+import { Entypo } from '@expo/vector-icons';
 
 import Checkbox from '@/components/CheckBox';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -78,9 +79,7 @@ export default function WriteMenuScreen() {
         style={styles.button}
         onPress={handleReturn}
         >
-          <Text style={styles.font}>
-            Return Home
-          </Text>
+          <Entypo name="home" size={35} color= '#ffefe2'/>
         </TouchableOpacity>
       </View>
     </View>
@@ -91,13 +90,12 @@ export default function WriteMenuScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 3,
-    backgroundColor: '#fff',
+    backgroundColor: '#3d2c25',
     alignItems: 'center',
     justifyContent: 'center',
   },
   buttonContainer:{
     flex: 1,
-    backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -116,9 +114,11 @@ const styles = StyleSheet.create({
   },
   button: {
     width: 170, 
-    backgroundColor: 'white',
+    height: 50,
+    backgroundColor: '#8c522c',
     padding: 0,
     alignItems: 'center',
+    justifyContent: 'center',
     borderRadius: 5,
     borderColor: 'black',
   },
