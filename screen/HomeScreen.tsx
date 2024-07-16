@@ -84,8 +84,12 @@ export default function HomeScreen() {
     drinkList.push(JSON.parse(item).drink)
   }
   var drinkedNum = 0;
+  var limitNum = 4;
   if(drinkList[0] != "注文してない"){
     drinkedNum = drinkList.length;
+    if(drinkedNum >= limitNum){
+      alert("ちょっと飲みすぎじゃないですか？")
+    }
   }
 
   return (
@@ -171,7 +175,7 @@ export default function HomeScreen() {
       </View>
       <View>
         <Text style={styles.font}>
-          {drinkedNum + "／n 杯目\n"}
+          {drinkedNum + "／" + limitNum + "杯目\n"}
           {drinkList}
         </Text>
       </View>

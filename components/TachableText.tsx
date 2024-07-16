@@ -65,7 +65,7 @@ const TachableText: React.FC<Props> = ({ id }) => {
       key : key
     }).then(data =>{
       for(let item of data){
-        console.log("item :::\t\t\t", item)
+        //console.log("item :::\t\t\t", item)
         drink_data.push(item)
       }
     }).catch(err => {
