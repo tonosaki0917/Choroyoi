@@ -1,4 +1,5 @@
 import { FinalAnswers } from "@/screen/QuestionSheetScreen";
+import { setProposeData, proposeDataType } from "@/screen/ResultScreen";
 
 //TODO functions about database
 
@@ -77,6 +78,12 @@ export const QuestionResult = (Final_answer): string[] => {
   return Target;
 }
 
+//表示に関係するデータだけを抽出する関数
+function extractDataType(drink: proposeDataType) {
+  const { id, type, name, information } = drink;
+  return { id, type, name, information };
+}
+
 
 export const getMenu = () =>{
   var selectableList = new Array();
@@ -103,7 +110,8 @@ export const findBestThree = () =>{
     
     if(item.flavor.includes(TargetList[0]) && item.soda.includes(TargetList[1]) && item.rock.includes(TargetList[2])){
       console.log("item::", item)
-      TopThree.push(item)
+      const propItem = extractDataType(item)
+      TopThree.push(propItem)
     }
   }
 
@@ -115,11 +123,13 @@ export const findBestThree = () =>{
       
       if(item.flavor.includes(TargetList[0]) || item.soda.includes(TargetList[1]) || item.rock.includes(TargetList[2])){
         console.log("item::", item)
-        TopThree.push(item)
+        const propItem = extractDataType(item)
+        TopThree.push(propItem)
       }
     }
   }
 
   console.log("TopThree::", TopThree, "num:, ", TopThree.length);
+  setProposeData(TopThree)
   return TopThree;
 }

@@ -9,6 +9,8 @@ import { storage, orderedMenuList, key, loadOrderedMenu } from '@/components/Tac
 
 type Navigation = NavigationProp<HomeStackList>;
 
+let existPropose = false
+
 type Result = {
   id: string;
   ans: 'yes' | 'no' | null;
@@ -61,6 +63,7 @@ const selectImage = (type: string) => {
 //提案アルゴリズム完了時に参照してほしい！！
 export const setProposeData = (newProposeData: proposeDataType[]) => {
   proposeData = newProposeData
+  existPropose = true
   results = [
     {
       id: 'r1',
@@ -110,10 +113,10 @@ let results = [
     id: 'r1',
     text: 'ーーー',
     image: require("../assets/images/beer.png"),
-    info: 'ーーーーー',
+    info: 'アンケートとメニュー撮影を行ってください',
     options: {
       yes: null, //終了
-      no: 'r2'
+      no: null
     }
   },
   {
@@ -220,7 +223,7 @@ export default function ResultScreen() {
       console.log(selectName)
 
       //名前がundefinedでなければＯＫ
-      if(selectName){
+      if(selectName && existPropose){
         selectOrder(selectName)
       }
     }
