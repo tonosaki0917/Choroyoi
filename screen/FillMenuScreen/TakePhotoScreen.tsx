@@ -4,6 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 import { HomeStackList } from '@/navigation/HomeNav';
 import { NavigationProp } from '@react-navigation/native';
 import Gpt_ocr from '../../components/Gpt_ocr'
+import { Entypo } from '@expo/vector-icons';
 
 type Navigation = NavigationProp<HomeStackList>;
 
@@ -18,9 +19,7 @@ export default function TakePhotoScreen() {
         style={styles.button}
         onPress={() => navigation.navigate('RouteHome')}
         >
-          <Text style={styles.font}>
-            Return Home
-          </Text>
+          <Entypo name="home" size={35} color= '#ffefe2'/>
         </TouchableOpacity>
       </View>
     </View>
@@ -31,7 +30,7 @@ export default function TakePhotoScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#ffefe2',
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -46,9 +45,11 @@ const styles = StyleSheet.create({
   },
   button: {
     width: 170, 
-    backgroundColor: 'white',
+    height: 50,
+    backgroundColor: '#8c522c',
     padding: 0,
     alignItems: 'center',
+    justifyContent: 'center',
     borderRadius: 5,
     borderColor: 'black',
   },
