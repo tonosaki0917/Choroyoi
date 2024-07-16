@@ -104,9 +104,7 @@ export default function ProfileScreen() {
         style={styles.button}
         onPress={() => navigation.navigate('RouteHome')}
         >
-          <Text style={styles.font}>
-            Return Home
-          </Text>
+          <Entypo name="home" size={35} color= '#ffefe2'/>
         </TouchableOpacity>
       </View>
     </View>
@@ -117,13 +115,12 @@ export default function ProfileScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#ffefe2',
     alignItems: 'center',
     justifyContent: 'center',
   },
   profileContainer: {
     flex: 2,
-    backgroundColor: '#fff',
     paddingTop: 80,
     alignItems: 'flex-start',
     justifyContent: 'flex-start',
@@ -139,14 +136,16 @@ const styles = StyleSheet.create({
   },
   button: {
     width: 170, 
-    backgroundColor: 'gray',
+    height: 50,
+    backgroundColor: '#22110E',
     padding: 0,
     alignItems: 'center',
+    justifyContent: 'center',
     borderRadius: 5,
     borderColor: 'black',
   },
   font: {
-    color: 'black', 
+    color: '#ffefe2', 
     fontSize: 30,
     letterSpacing: 5,
     padding: 1
@@ -168,7 +167,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   buttonDark: {
-    backgroundColor: '#90B0FF',
+    backgroundColor: '#8c522c',
     width: 40,
     height: 40,
     padding: 5,

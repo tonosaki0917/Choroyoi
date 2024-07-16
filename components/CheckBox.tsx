@@ -16,7 +16,7 @@ const Checkbox: React.FC<CheckboxProps> = ({ label, value, onValueChange }) => {
       onPress={() => onValueChange(!value)}
       containerStyle={styles.container}
       checkedColor="#ffefe2" // チェックが入った時のボックスの色を設定
-      textStyle={styles.text} // ボタンの文字色を設定
+      textStyle={styles.text} 
     />
   );
 };
@@ -27,6 +27,7 @@ const styles = StyleSheet.create({
     borderWidth: 0, // Optional: ボーダーを削除するため
   },
   text: {
+    fontSize: 20,
     color: '#ffefe2', // ボタンの文字色を設定
   },
 });
