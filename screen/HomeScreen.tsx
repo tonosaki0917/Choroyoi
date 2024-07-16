@@ -143,10 +143,11 @@ export default function HomeScreen() {
               </TouchableOpacity>
               <View style={styles.buttonRow}>
                   <TouchableOpacity
-                style={styles.buttonLight}
-                onPress={async () => {
-                  setOrder(await loadOrderedMenu())
-                }}>
+                    style={styles.buttonLight}
+                    onPress={async () => {
+                      setlimit(limitNum);
+                      setOrder(await loadOrderedMenu())
+                    }}>
                 <Entypo name="ccw" size={24} color='#ffefe2' />
               </TouchableOpacity>
               <TouchableOpacity
@@ -185,7 +186,7 @@ export default function HomeScreen() {
         </View>
         <View>
           <Text style={styles.font}>
-            {drinkedNum + "／" + limitNum + "杯目"}
+            {drinkedNum + "／" + limit + "杯目"}
           </Text>
         </View>
       <FlatList
