@@ -84,7 +84,7 @@ function extractDataType(drink: proposeDataType) {
   return { id, type, name, information };
 }
 
-
+// 撮影したメニューとDBとで共通する飲み物を抽出
 export const getMenu = () =>{
   var selectableList = new Array();
   for(const OCRList of extracted_drinks_list){
@@ -107,7 +107,6 @@ export const findBestThree = () =>{
     if(TopThree.length >= 3){
       break;
     }
-    
     if(item.flavor.includes(TargetList[0]) && item.soda.includes(TargetList[1]) && item.rock.includes(TargetList[2])){
       console.log("item::", item)
       const propItem = extractDataType(item)
@@ -115,12 +114,12 @@ export const findBestThree = () =>{
     }
   }
 
+  // 条件に沿うものがなかったとき
   if(TopThree.length == 0){
     for(const item of getMenu()){
       if(TopThree.length >= 3){
         break;
-      }
-      
+      } 
       if(item.flavor.includes(TargetList[0]) || item.soda.includes(TargetList[1]) || item.rock.includes(TargetList[2])){
         console.log("item::", item)
         const propItem = extractDataType(item)
