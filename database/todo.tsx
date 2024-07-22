@@ -1,5 +1,6 @@
 import { FinalAnswers } from "@/screen/QuestionSheetScreen";
 import { setProposeData, proposeDataType } from "@/screen/ResultScreen";
+import { useDrinkContext } from "../database/DrinkContext";
 
 //TODO functions about database
 
@@ -92,12 +93,13 @@ function extractDataType(drink: dataType) {
 
 // 撮影したメニューとDBとで共通する飲み物を抽出
 export const getMenu = () =>{
+  const { extractedDrinks } = useDrinkContext(); // Contextからデータを取得 
   var selectableList = new Array();
-  for(const OCRList of extracted_drinks_list){
+  for(const drink of extractedDrinks){
     for(const b of alcoholData){
-      if(b.name.includes(OCRList)){
+      if(b.name.includes(drink)){
         selectableList.push(b)
-      }
+      }                                  
     }
   }
 

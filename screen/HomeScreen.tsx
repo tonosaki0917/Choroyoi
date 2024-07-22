@@ -7,10 +7,9 @@ import NewMenu from '@/components/NewMenu';
 import { Entypo } from '@expo/vector-icons';
 import Feather from '@expo/vector-icons/Feather';
 
-import { useState, useCallback } from 'react';
-import { storage, orderedMenuList, loadOrderedMenu} from '@/components/TachableText';
+import { useState, useCallback, useEffect } from 'react';
+import { storage, orderedMenuList, loadOrderedMenu } from '@/components/TachableText';
 import { limitNum } from './ProfileScreen';
-
 
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/database';
@@ -18,19 +17,9 @@ import { firebaseConfig } from '@/database/firebase';
 import { auth } from '@/App';
 
 import { FinalAnswers } from './QuestionSheetScreen';
-import { findBestThree, getIdAll } from '@/database/todo';
+import { findBestThree, getIdAll, getMenu } from '@/database/todo';
 
 type Navigation = NavigationProp<HomeStackList>;
-
-// 今は使ってない
-let newMenuItems = "キウイサワー/ワイン/カシオレ/コーラハイボール/ジンジャーハイボール/日本酒/ジンソーダ/ウーロンハイ/"; // 変数menuItemsを設定、/（スラッシュ）で改行
-
-// 表示させるメニューの変更（更新は行われない）
-// データベースを設定したら、そこから取り出す方がよいと思われる
-// 今は使ってない
-export function updateMenuItems(newItems: string) {
-  newMenuItems = newItems;
-}
 
 // Firebaseの初期化
 if (!firebase.apps.length) {
@@ -38,7 +27,7 @@ if (!firebase.apps.length) {
 }
 
 // idで管理
-let newMenuItemsId: number[] = []
+let newMenuItemsId: number[] = [];
 // idリストの更新 <= WriteMenuScreen.tsx
 export function updateMenuItemsId(newIdList: number[]) {
   newMenuItemsId = newIdList;
@@ -47,12 +36,12 @@ export function updateMenuItemsId(newIdList: number[]) {
 // 履歴にデータを書き込む
 const writeOrderData = (drinks: string[]) => {
   const uid = auth.currentUser?.uid;
-  console.log("uid: ", uid)
+  console.log("uid: ", uid);
   for (var x of drinks.reverse()) {
-    const item = JSON.parse(x)
-    console.log(item)
-    if (item.drink == "注文してない") break;
-    const date = new Date(item.date).toString()
+    const item = JSON.parse(x);
+    console.log(item);
+    if (item.drink === "注文してない") break;
+    const date = new Date(item.date).toString();
     firebase.database().ref('history/' + uid + '/' + date).set({
       drink: item.drink,
       date: item.date
@@ -69,14 +58,18 @@ const writeOrderData = (drinks: string[]) => {
 export default function HomeScreen() {
   const navigation = useNavigation<Navigation>();
   const { width, height } = Dimensions.get('window');
-  const [menuItems, setMenuItems] = useState(newMenuItems);
+  const [menuItems, setMenuItems] = useState<number[]>(newMenuItemsId);
   const [Drinks, setOrder] = useState(orderedMenuList);
   const [limit, setlimit] = useState(limitNum);
 
-  // idで管理
-  const [menuItemsId, setMenuItemsId] = useState(newMenuItemsId);
+  // メニュー項目を取得して設定する関数
+  const fetchMenuItems = async () => {
+    const selectableList = getMenu();
+    const ids = selectableList.map(item => item.id);
+    setMenuItems(ids);
+  };
 
-  // 画面がフォーカスされたときに実行される
+  // WriteMenuScreenから戻ったときにmenuItemsIdを更新
   useFocusEffect(
     useCallback(() => {
       if(newMenuItemsId.length === 0){
@@ -86,131 +79,122 @@ export default function HomeScreen() {
       }else{
         console.log("from written")
         setMenuItemsId(newMenuItemsId);
-      }    
+      }
+      //setMenuItems(newMenuItemsId);
     }, [])
-  )
+  );
 
-  // 一時的な飲酒履歴の表示
-  // console.log("Drinks::::", Drinks)
-  var drinkList = new Array();
-  for (var item of Drinks) {
-    drinkList.push(JSON.parse(item).drink)
-  }
+  // 画面がフォーカスされたときにメニュー項目を更新
+  useEffect(() => {
+    fetchMenuItems();
+  }, []);
+
+  var drinkList = Drinks.map(item => JSON.parse(item).drink);
   var drinkedNum = 0;
-  if(drinkList[0] != "注文してない"){
+  if (drinkList[0] !== "注文してない") {
     drinkedNum = drinkList.length;
-    if(drinkedNum >= limit){
-      alert("ちょっと飲みすぎじゃないですか？")
+    if (drinkedNum >= limit) {
+      alert("ちょっと飲みすぎじゃないですか？");
     }
   }
 
   return (
     <ScrollView contentContainerStyle={styles.scrollContainer}>
       <View style={styles.container}>
-      <View style = {styles.allContainer}>
-        <View style={styles.menuContainerL}>
-          <View style={styles.titleContainer}>
-            <Text style={styles.titleText}>
-              <Text>お品がき </Text>
-            </Text>
-            <View style={styles.menuButton}>
-              <TouchableOpacity
-                style={styles.buttonDark}
-                onPress={() => navigation.navigate('WriteMenu')}
-              >
-                <Entypo name="edit" size={24} color='#ffefe2' />
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={styles.buttonLight}
-                onPress={() => navigation.navigate('TakePhoto')}
-              >
-                <Entypo name="camera" size={24} color='#ffefe2' />
-              </TouchableOpacity>
+        <View style={styles.allContainer}>
+          <View style={styles.menuContainerL}>
+            <View style={styles.titleContainer}>
+              <Text style={styles.titleText}>お品がき</Text>
+              <View style={styles.menuButton}>
+                <TouchableOpacity
+                  style={styles.buttonDark}
+                  onPress={() => navigation.navigate('WriteMenu')}
+                >
+                  <Entypo name="edit" size={24} color='#ffefe2' />
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={styles.buttonLight}
+                  onPress={() => navigation.navigate('TakePhoto')}
+                >
+                  <Entypo name="camera" size={24} color='#ffefe2' />
+                </TouchableOpacity>
+              </View>
             </View>
-          </View>
-          <NewMenu
-            menuItems={menuItemsId}
-            radius={8}
-            justifyContent='center'
-            alignItems='center'
-          >
-          </NewMenu>
-          <View style={styles.buttonRow}>
-            <View style={styles.buttonColumn}>
-              <TouchableOpacity
-                style={styles.buttonQuestion}
-                onPress={() => navigation.navigate('QuestionSheet')}
-              >
-                <Image
-                  source={require("../assets/images/checkboard.png")}
-                  style={styles.imageStyle}
-                />
-                <Text style={styles.font}>
-                  Question
-                </Text>
-              </TouchableOpacity>
-              <View style={styles.buttonRow}>
+            <NewMenu
+              menuItems={menuItems}
+              radius={8}
+              justifyContent='center'
+              alignItems='center'
+            />
+            <View style={styles.buttonRow}>
+              <View style={styles.buttonColumn}>
+                <TouchableOpacity
+                  style={styles.buttonQuestion}
+                  onPress={() => navigation.navigate('QuestionSheet')}
+                >
+                  <Image
+                    source={require("../assets/images/checkboard.png")}
+                    style={styles.imageStyle}
+                  />
+                  <Text style={styles.font}>Question</Text>
+                </TouchableOpacity>
+                <View style={styles.buttonRow}>
                   <TouchableOpacity
                     style={styles.buttonLight}
                     onPress={async () => {
                       findBestThree();
                       setlimit(limitNum);
-                      setOrder(await loadOrderedMenu())
-                    }}>
-                <Entypo name="ccw" size={24} color='#ffefe2' />
-              </TouchableOpacity>
-              <TouchableOpacity
-            style={styles.buttonLight}
-            onPress={async () => {
-              writeOrderData(Drinks)
-              alert(drinkedNum + "杯飲みました！\n"
-                + "↓↓↓Result↓↓↓\n" + drinkList);
-              storage.remove({ key: "test" })
-              setOrder(await loadOrderedMenu())
-            }}>
-            <Entypo name="controller-stop" size={30} color='#ffefe2' />
-          </TouchableOpacity>
-              <TouchableOpacity
-                style={styles.buttonDark
-                }
-                onPress={() => navigation.navigate('Profile')}
-              >
-                <Feather name="user" size={30} color='#ffefe2' />
-              </TouchableOpacity>
+                      setOrder(await loadOrderedMenu());
+                    }}
+                  >
+                    <Entypo name="ccw" size={24} color='#ffefe2' />
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    style={styles.buttonLight}
+                    onPress={async () => {
+                      writeOrderData(Drinks);
+                      alert(drinkedNum + "杯飲みました！\n↓↓↓Result↓↓↓\n" + drinkList);
+                      storage.remove({ key: "test" });
+                      setOrder(await loadOrderedMenu());
+                    }}
+                  >
+                    <Entypo name="controller-stop" size={30} color='#ffefe2' />
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    style={styles.buttonDark}
+                    onPress={() => navigation.navigate('Profile')}
+                  >
+                    <Feather name="user" size={30} color='#ffefe2' />
+                  </TouchableOpacity>
+                </View>
               </View>
+              <TouchableOpacity
+                style={styles.buttonResult}
+                onPress={() => { navigation.navigate('Result'); console.log(FinalAnswers); }}
+              >
+                <Image
+                  source={require("../assets/images/bell.png")}
+                  style={styles.bellimage}
+                />
+                <Text style={styles.font}>Result</Text>
+              </TouchableOpacity>
             </View>
-          <TouchableOpacity 
-          style={styles.buttonResult}
-          onPress={() => {navigation.navigate('Result'); console.log(FinalAnswers)}}
-          >
-            <Image 
-                source={require("../assets/images/bell.png")}
-                style={styles.bellimage}
-              />
-              <Text style={styles.font}>
-                Result
-              </Text>
-            </TouchableOpacity>
           </View>
-        </View>
-        <View>
-          <Text style={styles.font}>
-            {drinkedNum + "／" + limit + "杯目"}
-          </Text>
-        </View>
-      <FlatList
-          data={drinkList}
-          keyExtractor={(item, index) => index.toString()}
-          renderItem={({ item }) => (
-            <Text style={styles.font}>{item}</Text>
-          )}
-        />
+          <View>
+            <Text style={styles.font}>{drinkedNum + "／" + limit + "杯目"}</Text>
+          </View>
+          <FlatList
+            data={drinkList}
+            keyExtractor={(item, index) => index.toString()}
+            renderItem={({ item }) => (
+              <Text style={styles.font}>{item}</Text>
+            )}
+          />
         </View>
       </View>
     </ScrollView>
   );
 }
-
 
 const styles = StyleSheet.create({
   scrollContainer: {
@@ -260,7 +244,7 @@ const styles = StyleSheet.create({
   titleText: {
     color: '#ffefe2',
     fontSize: 30,
-    padding: 1
+    padding: 1,
   },
   imageStyle: {
     flex: 0,
@@ -289,7 +273,7 @@ const styles = StyleSheet.create({
     margin: 5,
     borderRadius: 15,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   buttonLight: {
     backgroundColor: '#996d48',
@@ -299,7 +283,7 @@ const styles = StyleSheet.create({
     margin: 5,
     borderRadius: 15,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   buttonQuestion: {
     backgroundColor: '#8c522c',
@@ -310,7 +294,7 @@ const styles = StyleSheet.create({
     marginLeft: 5,
     borderRadius: 15,
     justifyContent: 'flex-end',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   buttonResult: {
     backgroundColor: '#bb7334',
@@ -320,11 +304,11 @@ const styles = StyleSheet.create({
     margin: 10,
     borderRadius: 15,
     justifyContent: 'flex-end',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   font: {
     color: '#ffefe2',
     fontSize: 25,
-    padding: 1
-  }
+    padding: 1,
+  },
 });
