@@ -242,26 +242,25 @@ export default function ResultScreen() {
             style={styles.closeButton} 
             onPress={() => navigation.navigate("RouteHome")}>
             <Text style={styles.buttonText}>×</Text>
-          </TouchableOpacity>
+        </TouchableOpacity>
         <View style={styles.imageContainer}>
           <Text style={styles.resultText}>あなたへのおすすめは{'\n'}{currentQuestion.text}</Text>
           <Image source={currentQuestion.image} style={styles.image} />
           <Text style={styles.infoText}>{'\n'}{currentQuestion.info}</Text>
         </View>
-      
-      <View style={styles.buttonContainer}>
-        <TouchableOpacity 
-          style={styles.buttonDark} 
-          onPress={() => handleAnswer('yes')}>
-          <Text style={styles.buttonText}>これや！</Text>
-        </TouchableOpacity>
-        <TouchableOpacity 
-          style={styles.buttonLight} 
-          onPress={() => handleAnswer('no')}>
-          <Text style={styles.buttonText}>別のお酒</Text>
-        </TouchableOpacity>
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity 
+            style={styles.buttonDark} 
+            onPress={() => handleAnswer('yes')}>
+            <Text style={styles.buttonText}>これや！</Text>
+          </TouchableOpacity>
+          <TouchableOpacity 
+            style={styles.buttonLight} 
+            onPress={() => handleAnswer('no')}>
+            <Text style={styles.buttonText}>別のお酒</Text>
+          </TouchableOpacity>
         </View>
-        </View>
+      </View>
     </View>
   );
 }

@@ -6,6 +6,7 @@ import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
 import { Entypo } from '@expo/vector-icons';
 import { CHATGPT_API_KEY } from '@/database/firebase';
+import { update_extracted_drink } from '@/database/todo';
 
 
 
@@ -102,6 +103,7 @@ const Gpt_ocr = () => {
             console.log("ChatGPT API response:", response.data); 
             const extracted_drinks_list = response.data.choices[0].message.content.split(',').map((drink:string) => drink.trim());
             console.log("Extracted drinks list:", extracted_drinks_list);
+            update_extracted_drink(extracted_drinks_list);
             return extracted_drinks_list;
         } catch (error) {
             console.error("Error calling ChatGPT API:", error);

@@ -6,19 +6,21 @@ import { setProposeData, proposeDataType } from "@/screen/ResultScreen";
 //テスト用のただの例
 const options = ["ビール", "焼酎", "梅酒","サワー","日本酒","酒１","酒２","酒３","酒４","酒５","鮭","a","b","c","d","e","f","g"];
 
-export const getAlchol = (id: number) => {
+type dataType = {
+  id: number;
+  type: string;
+  name: string;
+  percentage: string;
+  flavor: string;
+  soda: string;
+  rock: string;
+  information: string;
+}
 
-  if (id === 0){
-    return {id: id, name: "ビール", info: "びーるびーるのびーる"} //形式は変更可能
-  }
-  else if (id === 3){
-    return {id: id, name: "サワー", info: "さわーさわーくりーむ"} 
-  }
-  else if (id === 2){
-    return {id: id, name: "梅酒", info: "うめうめしゅしゅ"}
-  }
-  else{
-    return {id: id, name: options[id], info: "おいしいよね"}
+export const getAlchol = (id: number) => {
+  const data = alcoholData.find(alcohol => alcohol.id === id);
+  if(data){
+    return extractDataType(data)
   }
 }
 
@@ -48,8 +50,12 @@ const Final_answer = [
   {id:"q4", ans:"yes"},
 ]
 
-const extracted_drinks_list =
-    ["キリン一番搾り", "キリンクラシックラガー", "サッポロラガー", "キリングリーンズフリー", "オールシラクァーゴールド", "レモン", "ライム", "ウーロン茶", "金宮生搾りレモンサワー", "さつま白波", "富乃宝山", "萬年黒麹", "いもいち", "赤鹿毛", "青鹿毛", "満寿 泉", "梅酒 KYOTO UMELABO", "柚子ふわり", "あらごしみかん"]
+//ここを変えるべき
+let extracted_drinks_list:string[] = []
+
+export const update_extracted_drink = (newDrinkList: string[]) => {
+  extracted_drinks_list = newDrinkList
+}
 
 // type Answer = {
 //   id: string;
@@ -79,7 +85,7 @@ export const QuestionResult = (Final_answer): string[] => {
 }
 
 //表示に関係するデータだけを抽出する関数
-function extractDataType(drink: proposeDataType) {
+function extractDataType(drink: dataType) {
   const { id, type, name, information } = drink;
   return { id, type, name, information };
 }
@@ -95,8 +101,21 @@ export const getMenu = () =>{
     }
   }
 
-  console.log(selectableList);
+  console.log("selectableList: ", selectableList);
   return selectableList;
+}
+
+//表示させる酒のidを渡す関数
+export const getIdAll = () => {
+  const listAll = getMenu()
+  const ids = new Array()
+
+  for(const item of listAll){
+    ids.push(item.id)
+  }
+
+  console.log("ids:", ids )
+  return ids
 }
 
 export const findBestThree = () =>{

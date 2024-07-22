@@ -15,7 +15,7 @@ interface Props {
 interface DataType {
   id: number;
   name: string;
-  info: string;
+  information: string;
 }
 
 //ストレージの作成
@@ -107,7 +107,7 @@ const TachableText: React.FC<Props> = ({ id }) => {
         <View style={styles.modalContainer}>
           <View style={styles.modalContent}>
             <Text style={styles.modalTitle}>{data.name}</Text>
-            <Text style={styles.modalInfo}>{data.info}</Text>
+            <Text style={styles.modalInfo}>{data.information}</Text>
             <Button title="Close" onPress={() => setDetailModalVisible(false)} />
           </View>
         </View>
