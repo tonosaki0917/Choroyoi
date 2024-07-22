@@ -6,7 +6,9 @@ import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
 import { Entypo } from '@expo/vector-icons';
 import { CHATGPT_API_KEY } from '@/database/firebase';
-import { useDrinkContext } from '../database/DrinkContext'
+
+import { update_extracted_drink } from '@/database/todo';
+//import { useDrinkContext } from '../database/DrinkContext'
 
 
 
@@ -113,9 +115,15 @@ const Gpt_ocr = () => {
                 }
             );
             console.log("ChatGPT API response:", response.data); 
-            const gpt_extracted_drinks_list = response.data.choices[0].message.content.split(',').map((drink:string) => drink.trim());
-            console.log("Extracted drinks list:", gpt_extracted_drinks_list);
-            return gpt_extracted_drinks_list; //抽出されたドリンク名を返す
+          
+            const extracted_drinks_list = response.data.choices[0].message.content.split(',').map((drink:string) => drink.trim());
+            console.log("Extracted drinks list:", extracted_drinks_list);
+            update_extracted_drink(extracted_drinks_list);
+            return extracted_drinks_list;
+            
+            //const gpt_extracted_drinks_list = response.data.choices[0].message.content.split(',').map((drink:string) => drink.trim());
+            //console.log("Extracted drinks list:", gpt_extracted_drinks_list);
+            //return gpt_extracted_drinks_list; //抽出されたドリンク名を返す
         } catch (error) {
             console.error("Error calling ChatGPT API:", error);
             throw error;

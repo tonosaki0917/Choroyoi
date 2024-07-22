@@ -17,7 +17,7 @@ import { firebaseConfig } from '@/database/firebase';
 import { auth } from '@/App';
 
 import { FinalAnswers } from './QuestionSheetScreen';
-import { findBestThree, getMenu } from '@/database/todo';
+import { findBestThree, getIdAll, getMenu } from '@/database/todo';
 
 type Navigation = NavigationProp<HomeStackList>;
 
@@ -72,7 +72,15 @@ export default function HomeScreen() {
   // WriteMenuScreenから戻ったときにmenuItemsIdを更新
   useFocusEffect(
     useCallback(() => {
-      setMenuItems(newMenuItemsId);
+      if(newMenuItemsId.length === 0){
+        console.log("from OCR")
+        const idListFromOCR = getIdAll()
+        setMenuItemsId(idListFromOCR);
+      }else{
+        console.log("from written")
+        setMenuItemsId(newMenuItemsId);
+      }
+      //setMenuItems(newMenuItemsId);
     }, [])
   );
 
