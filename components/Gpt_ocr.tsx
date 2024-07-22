@@ -6,13 +6,15 @@ import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
 import { Entypo } from '@expo/vector-icons';
 import { CHATGPT_API_KEY } from '@/database/firebase';
+import { useDrinkContext } from '../database/DrinkContext'
 
 
 
 const Gpt_ocr = () => {
     const [hasCameraPermission, setHasCameraPermission] = useState(false);
     const [hasMediaLibraryPermission, setHasMediaLibraryPermission] = useState(false);
-    const [extractedDrinks, setExtractedDrinks] = useState([]);
+    const { setExtractedDrinks } = useDrinkContext(); // Contextから関数を取得
+    const { extractedDrinks } = useDrinkContext(); // Contextからデータを取得
 
     useEffect(() => {
         const requestPermissions = async () => {
@@ -57,7 +59,7 @@ const Gpt_ocr = () => {
        
             try {
                 const drinks = await extractDrinksWithChatGPT(base64Image);
-                setExtractedDrinks(drinks);
+                setExtractedDrinks(drinks); // ここでOCRで読み取った項目を格納
                 console.log("Extracted drinks:", drinks);
                 Alert.alert('Success', 'The picture has been processed and drinks extracted.');
             } catch(error) {
@@ -67,7 +69,18 @@ const Gpt_ocr = () => {
         }
     };
 
-    const extractDrinksWithChatGPT = async (base64Image) => {
+        // 型指定
+        type ChatGPTResponse = {
+            choices: {
+            message: {
+                content: string;
+            };
+            }[];
+        };
+  
+  
+
+    const extractDrinksWithChatGPT = async (base64Image: string): Promise<string[]>  => {
         try {
             const response = await axios.post(
                 'https://api.openai.com/v1/chat/completions',
@@ -100,9 +113,9 @@ const Gpt_ocr = () => {
                 }
             );
             console.log("ChatGPT API response:", response.data); 
-            const extracted_drinks_list = response.data.choices[0].message.content.split(',').map((drink:string) => drink.trim());
-            console.log("Extracted drinks list:", extracted_drinks_list);
-            return extracted_drinks_list;
+            const gpt_extracted_drinks_list = response.data.choices[0].message.content.split(',').map((drink:string) => drink.trim());
+            console.log("Extracted drinks list:", gpt_extracted_drinks_list);
+            return gpt_extracted_drinks_list; //抽出されたドリンク名を返す
         } catch (error) {
             console.error("Error calling ChatGPT API:", error);
             throw error;
@@ -122,7 +135,7 @@ const Gpt_ocr = () => {
             {extractedDrinks.length > 0 && (
                 <View style={styles.resultContainer}>
                     <Text style={styles.resultTitle}>抽出されたドリンク</Text>
-                    {extractedDrinks.map((drink, index) => (
+                    {extractedDrinks.map((drink: string, index: number) => (
                         <Text key={index} style={styles.resultText}>{drink}</Text>
                     ))}
                 </View>

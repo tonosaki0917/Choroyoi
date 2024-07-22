@@ -1,5 +1,6 @@
 import { NavigationContainer, NavigatorScreenParams } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+import { DrinkProvider } from '@/database/DrinkContext';
 
 import Login from '../screen/Login';
 import { HomeNavigation, HomeStackList } from './HomeNav';
@@ -18,11 +19,13 @@ export function MainNavigation() {
   
     return (
       <NavigationContainer>
+        <DrinkProvider>
         <Stack.Navigator initialRouteName="Login">
           <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
           <Stack.Screen name="Register" component={Register} options={{ headerShown: false }} />
           <Stack.Screen name="Home" component={HomeNavigation} options={{ headerShown: false }}/>
         </Stack.Navigator>
+        </DrinkProvider>
       </NavigationContainer>
     );
   }
