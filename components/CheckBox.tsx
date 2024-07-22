@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
     borderWidth: 0, // Optional: ボーダーを削除するため
   },
   text: {
-    fontSize: 20,
+    fontSize: 13,
     color: '#ffefe2', // ボタンの文字色を設定
   },
 });

@@ -73,9 +73,6 @@ export default function ProfileScreen() {
           </TouchableOpacity>
         </View>
         <Text style={styles.email}>{currentEmail}</Text>
-
-        <Text style={styles.message}>アレルギー情報？</Text>
-        
         <Text style={styles.message}>上限設定</Text>
         <InputNumber
           defaultValue={limitNum}
@@ -135,7 +132,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   rowContainer: {
-    flex: 1,
+    flex: 2,
     height: 300,
     backgroundColor: '#ffefe2',
     alignItems: 'center',
